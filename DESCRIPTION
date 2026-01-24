@@ -1,6 +1,6 @@
 Package: piano
 Title: Visualise a Piano Keyboard with ggplot2
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Authors@R: 
     person("Stefan", "Lanz", , "slanz1137@gmail.com", role = c("aut", "cre"))
 Description: Visualise a piano keyboard with ggplot2.
