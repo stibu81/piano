@@ -6,7 +6,7 @@
 \alias{piano-package}
 \title{Visualise a Piano Keyboard}
 \description{
-Useful functionality to visualise chords on a piano keyboard.
+Visualise a piano keyboard with ggplot2.
 }
 \author{
 \strong{Maintainer}: Stefan Lanz \email{slanz1137@gmail.com}
