@@ -11,4 +11,6 @@ RoxygenNote: 7.3.3
 Imports: 
     utils,
     dplyr,
-    ggplot2
+    ggplot2,
+    rlang,
+    cli

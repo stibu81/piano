@@ -4,7 +4,13 @@
 \alias{plot_piano}
 \title{Plot a Piano Keyboard}
 \usage{
-plot_piano()
+plot_piano(lower = "A2", upper = "c5")
+}
+\arguments{
+\item{lower, upper}{the lowest and hightes key of the piano keyboard
+to plot. Both values must correspond to a white key, i.e. a note of the
+C major scale, between A2 and c5 and \code{upper} must be at least one key above
+\code{lower}.}
 }
 \value{
 a \code{ggplot} object
