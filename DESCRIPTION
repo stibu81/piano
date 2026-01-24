@@ -1,6 +1,6 @@
 Package: piano
 Title: Visualise a Piano Keyboard with ggplot2
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: 
     person("Stefan", "Lanz", , "slanz1137@gmail.com", role = c("aut", "cre"))
 Description: Visualise a piano keyboard with ggplot2.
@@ -10,4 +10,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports: 
     utils,
-    dplyr
+    dplyr,
+    ggplot2
