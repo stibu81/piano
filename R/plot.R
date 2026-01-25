@@ -25,7 +25,7 @@ plot_piano <- function(lower = "A2", upper = "c5",
 
   # filter the range of keys. For some reason, ggplot does not manage to plot
   # a single rectangle. However, doubling the black key works.
-  keys_f <- filter_keys(lower, upper)
+  keys_f <- filter_key_range(keys, lower, upper)
   if (nrow(keys_f$black) == 1) {
     keys_f$black <- dplyr::bind_rows(keys_f$black, keys_f$black)
   }

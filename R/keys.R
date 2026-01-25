@@ -36,8 +36,8 @@ keys <- local({
     ),
     name_flat = paste0(
       c(
-        toupper(c(utils::tail(flats, 1), rep(flats, 2))),
-        rep(flats, 5)
+        utils::tail(flats, 1), rep(flats, 2),
+        tolower(rep(flats, 5))
       ),
       "b",
       c(2, rep(1, 5), rep("", 10), rep(1:4, each = 5))
@@ -57,19 +57,20 @@ keys <- local({
 
 # filter keys inbetween a lower and upper limit
 
-filter_keys <- function(lower, upper, error_call = rlang::caller_env()) {
+filter_key_range <- function(keys, lower, upper,
+                             error_call = rlang::caller_env()) {
 
   # find the key names in the table of white keys. Only white keys are allowed.
   i_lower <- which(keys$white == lower)
   if (length(i_lower) == 0) {
-    cli::cli_abort("'{lower}' is not a valid lower key.", .envir = error_call)
+    cli::cli_abort("'{lower}' is not a valid lower key.", call = error_call)
   }
   i_upper <- which(keys$white == upper)
   if (length(i_upper) == 0) {
-    cli::cli_abort("'{upper}' is not a valid upper key.", .envir = error_call)
+    cli::cli_abort("'{upper}' is not a valid upper key.", call = error_call)
   }
   if (i_upper <= i_lower) {
-    cli::cli_abort("lower must be below upper.", .envir = error_call)
+    cli::cli_abort("lower must be below upper.", call = error_call)
   }
 
   # filter the white keys first, then select the black keys that lie inbetween
