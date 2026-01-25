@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='svglite' data-engine-version='2.0' width='720.00pt' height='576.00pt' viewBox='0 0 720.00 576.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA='>
+    <rect x='0.00' y='0.00' width='720.00' height='576.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<defs>
+  <clipPath id='cpMjc0LjA1fDQ0NS45NXwwLjAwfDU3Ni4wMA=='>
+    <rect x='274.05' y='0.00' width='171.91' height='576.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMjc0LjA1fDQ0NS45NXwwLjAwfDU3Ni4wMA==)'>
+<rect x='274.05' y='0.00' width='171.91' height='576.00' style='stroke-width: 0.00; stroke: none;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<defs>
+  <clipPath id='cpMjc0LjA1fDQ0NS45NXwxNy4zMHw1NzYuMDA='>
+    <rect x='274.05' y='17.30' width='171.91' height='558.70' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMjc0LjA1fDQ0NS45NXwxNy4zMHw1NzYuMDA=)'>
+<rect x='281.86' y='42.70' width='78.14' height='507.91' style='stroke-width: 1.07; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
+<rect x='360.00' y='42.70' width='78.14' height='507.91' style='stroke-width: 1.07; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
+<rect x='339.68' y='42.70' width='40.63' height='336.00' style='stroke-width: 1.07; stroke-linecap: butt; stroke-linejoin: miter; fill: #000000;' />
+<rect x='339.68' y='42.70' width='40.63' height='336.00' style='stroke-width: 1.07; stroke-linecap: butt; stroke-linejoin: miter; fill: #000000;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+<text x='274.05' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='181.25px' lengthAdjust='spacingAndGlyphs'>plot_piano() for only three keys</text>
+</g>
+</svg>
