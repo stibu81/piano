@@ -1,0 +1,49 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# piano
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/stibu81/piano/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stibu81/piano/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/stibu81/piano/graph/badge.svg)](https://app.codecov.io/gh/stibu81/piano)
+<!-- badges: end -->
+
+Create visualisations of a piano keyboard with ggplot2.
+
+
+## Installation
+
+You can install the development version of piano from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("stibu81/piano")
+```
+
+## Example
+
+Use `plot_piano()` to plot a full piano keyboard with 88 keys:
+
+```{r full_piano, fig.height=1.1, out.width="80%"}
+library(piano)
+plot_piano()
+```
+
+The range of the piano can be restricted and labels can be added:
+
+```{r piano_with_labels, fig.height=2.2, out.width="80%"}
+plot_piano("C", "e2", labels = "white")
+```
+
