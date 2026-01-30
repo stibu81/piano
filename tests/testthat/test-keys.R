@@ -23,3 +23,16 @@ test_that("filter_key_range() error messages work", {
   expect_error(filter_key_range(keys, "c3", "e2"),
                "lower must be below upper")
 })
+
+
+test_that("verify_key_names() works", {
+  expect_true(verify_key_names(c("C", "d", "eb4", "g#2")))
+  expect_error(verify_key_names(c("D1", "C2")),
+               "C2 is not a valid note name")
+  expect_error(verify_key_names(c("D1", "C2", "a3", "d5")),
+               "C2 and d5 are not valid note names")
+  expect_error(verify_key_names(c("C", "d", "eb4", "g#2"), type = "white"),
+               "eb4 and g#2 are not valid note names")
+  expect_error(verify_key_names(c("C", "d", "eb4", "g#2"), type = "black"),
+               "C and d are not valid note names")
+})

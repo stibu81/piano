@@ -82,3 +82,27 @@ filter_key_range <- function(keys, lower, upper,
 
   list(white = white, black = black)
 }
+
+
+
+# verify that a character vector contains valid key names
+
+verify_key_names <- function(key_names, type = c("all", "white", "black"),
+                             error_call = rlang::caller_env()) {
+
+  type <- match.arg(type)
+
+  valid_names <- c(
+    if (type %in% c("all", "white")) keys$white$name,
+    if (type %in% c("all", "black")) c(keys$black$name_sharp, keys$black$name_flat)
+  )
+
+  bad_names <- setdiff(key_names, valid_names)
+  if (length(bad_names) > 0) {
+    cli::cli_abort(
+      "{bad_names} {?is/are} not {?a/} valid note name{?s}."
+    )
+  }
+
+  return(TRUE)
+}
