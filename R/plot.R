@@ -1,7 +1,9 @@
 #' Plot a Piano Keyboard
 #'
 #' @param lower,upper the lowest and highest key of the piano keyboard
-#'  to plot. Both values must correspond to a white key, i.e. a note of the
+#'  to plot in the numbered
+#'  [Helmholtz pitch notation](https://en.wikipedia.org/wiki/Helmholtz_pitch_notation).
+#'  Both values must correspond to a white key, i.e. a note of the
 #'  C major scale, between A2 and c5 and `upper` must be at least one key above
 #'  `lower`.
 #' @param labels character indicating whether labels with note names should

@@ -1,4 +1,6 @@
 # Define an object that contains data on white and black keys.
+# Note names use the numbered Helmholtz pitch notation where a standard
+# 88 key piano ranges from A2 to c5
 keys <- local({
   # white keys
   c_major <- c("C", "D", "E", "F", "G", "A", "B")

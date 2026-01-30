@@ -13,7 +13,9 @@ plot_piano(
 }
 \arguments{
 \item{lower, upper}{the lowest and highest key of the piano keyboard
-to plot. Both values must correspond to a white key, i.e. a note of the
+to plot in the numbered
+\href{https://en.wikipedia.org/wiki/Helmholtz_pitch_notation}{Helmholtz pitch notation}.
+Both values must correspond to a white key, i.e. a note of the
 C major scale, between A2 and c5 and \code{upper} must be at least one key above
 \code{lower}.}
 
