@@ -27,3 +27,25 @@ test_that("plot_piano() works with labels", {
   expect_doppelganger("plot_piano() with labels for all keys",
                       plot_piano("D1", "f2", labels = "all"))
 })
+
+
+test_that("plot_piano() works with markers", {
+  expect_doppelganger("plot_piano() with markers for left hand",
+                      plot_piano(mark_left = c("D", "F#", "A", "c")))
+  expect_doppelganger("plot_piano() with markers for right hand",
+                      plot_piano(mark_right = c("g1", "bb1", "d2", "f2")))
+  expect_doppelganger("plot_piano() with markers for both hands",
+                      plot_piano(mark_left = c("e", "bb", "d1"),
+                                 mark_right = c("e1", "a1", "c2")))
+  expect_doppelganger("plot_piano() works with custom marker colours",
+                      plot_piano(mark_left = c("e", "bb", "d1"),
+                                 mark_right = c("e1", "a1", "c2"),
+                                 colour_left = "orange",
+                                 colour_right = "#ef45d2"))
+  expect_doppelganger(
+    "plot_piano() with markers and range restriction",
+     plot_piano("A1", "c1", mark_left = c("D", "F#", "A", "c"))
+  )
+})
+
+

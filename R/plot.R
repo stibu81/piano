@@ -11,6 +11,11 @@
 #'  or black keys, respectively and `"all"` to show labels for all keys.
 #' @param black_labels character indicating the names to be used for the labels
 #'  of the black keys.
+#' @param mark_left,mark_right mark keys for the left and right hand with
+#'  coloured dots.
+#' @param colour_left,colour_right the colours to be used to mark keys. By
+#'  default, a blue colour is used for the left hand and a red colour for the
+#'  right hand.
 #'
 #' @returns
 #' a `ggplot` object
@@ -19,8 +24,11 @@
 
 plot_piano <- function(lower = "A2", upper = "c5",
                        labels = c("none", "white", "black", "all"),
-                       black_labels = c("sharp", "flat")) {
-
+                       black_labels = c("sharp", "flat"),
+                       mark_left = c(),
+                       mark_right = c(),
+                       colour_left = "deepskyblue",
+                       colour_right = "firebrick1") {
 
   labels <- match.arg(labels)
   black_labels <- match.arg(black_labels)
@@ -32,16 +40,49 @@ plot_piano <- function(lower = "A2", upper = "c5",
     keys_f$black <- dplyr::bind_rows(keys_f$black, keys_f$black)
   }
 
-  piano_plot <- ggplot2::ggplot(
-      mapping = ggplot2::aes(xmin = .data[["xmin"]], width = .data[["width"]],
-                             ymin = .data[["ymin"]], ymax = .data[["ymax"]])
+  # don't put the aesthetic mappings inside ggplot() because drawing the dots
+  # below need different mappings.
+  piano_plot <- ggplot2::ggplot() +
+    ggplot2::geom_rect(
+      ggplot2::aes(xmin = .data[["xmin"]], width = .data[["width"]],
+                   ymin = .data[["ymin"]], ymax = .data[["ymax"]]),
+      data = keys_f$white, colour = "black", fill = "white"
     ) +
-    ggplot2::geom_rect(data = keys_f$white, colour = "black", fill = "white") +
-    ggplot2::geom_rect(data = keys_f$black, colour = "black", fill = "black") +
+    ggplot2::geom_rect(
+      ggplot2::aes(xmin = .data[["xmin"]], width = .data[["width"]],
+                   ymin = .data[["ymin"]], ymax = .data[["ymax"]]),
+      data = keys_f$black, colour = "black", fill = "black"
+    ) +
     ggplot2::coord_equal() +
     ggplot2::theme_void()
 
   piano_plot <- add_key_labels(piano_plot, keys_f, labels, black_labels)
+
+  # prepare the markers for each hand
+  markers <- dplyr::bind_rows(
+      get_key_markers(mark_left) %>%
+        dplyr::mutate(hand = "left"),
+      get_key_markers(mark_right) %>%
+        dplyr::mutate(hand = "right")
+    )
+
+  # add the markers. Draw them as circles, not points, in order to be able to
+  # specify their size in the same units as the key width.
+  piano_plot <- piano_plot +
+    ggforce::geom_circle(
+      ggplot2::aes(
+        x0 = .data[["x"]],
+        y0 = .data[["y"]],
+        fill = .data[["hand"]],
+        r = 0.25
+      ),
+      data = markers,
+      colour = NA
+    ) +
+    ggplot2::scale_fill_manual(
+      values = c("left" = colour_left, right = colour_right),
+      guide = "none"
+    )
 
   piano_plot
 }

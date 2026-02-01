@@ -8,7 +8,11 @@ plot_piano(
   lower = "A2",
   upper = "c5",
   labels = c("none", "white", "black", "all"),
-  black_labels = c("sharp", "flat")
+  black_labels = c("sharp", "flat"),
+  mark_left = c(),
+  mark_right = c(),
+  colour_left = "deepskyblue",
+  colour_right = "firebrick1"
 )
 }
 \arguments{
@@ -25,6 +29,13 @@ or black keys, respectively and \code{"all"} to show labels for all keys.}
 
 \item{black_labels}{character indicating the names to be used for the labels
 of the black keys.}
+
+\item{mark_left, mark_right}{mark keys for the left and right hand with
+coloured dots.}
+
+\item{colour_left, colour_right}{the colours to be used to mark keys. By
+default, a blue colour is used for the left hand and a red colour for the
+right hand.}
 }
 \value{
 a \code{ggplot} object

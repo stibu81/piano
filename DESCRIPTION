@@ -12,6 +12,7 @@ Language: en-GB
 Imports: 
     dplyr,
     ggplot2,
+    ggforce,
     rlang,
     cli
 Suggests: 

@@ -40,3 +40,14 @@ plot_piano("C", "e2", labels = "white")
 ```
 
 <img src="man/figures/README-piano_with_labels-1.png" alt="" width="80%" />
+
+Chords can be marked on the keyboard using different colours for the
+left and right hand:
+
+``` r
+plot_piano("F", "c3",
+           mark_left = c("e", "bb", "d1"),
+           mark_right = c("e1", "a1", "c2"))
+```
+
+<img src="man/figures/README-piano_with_chord-1.png" alt="" width="80%" />
