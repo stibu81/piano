@@ -42,9 +42,18 @@ test_that("plot_piano() works with markers", {
                                  mark_right = c("e1", "a1", "c2"),
                                  colour_left = "orange",
                                  colour_right = "#ef45d2"))
+})
+
+test_that("plot_piano() works with markers and range restriction", {
   expect_doppelganger(
-    "plot_piano() with markers and range restriction",
-     plot_piano("A1", "c1", mark_left = c("D", "F#", "A", "c"))
+    "plot_piano() with range restriction and markers within range",
+    plot_piano("A1", "c1", mark_left = c("D", "F#"), mark_right = c("A", "c"))
+  )
+  expect_doppelganger(
+    "plot_piano() with range restriction and markers outside range",
+     plot_piano("A1", "c1",
+                mark_left = c("E1", "D", "F#"),
+                mark_right = c("A", "c", "d2"))
   )
 })
 

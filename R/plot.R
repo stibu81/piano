@@ -12,7 +12,7 @@
 #' @param black_labels character indicating the names to be used for the labels
 #'  of the black keys.
 #' @param mark_left,mark_right mark keys for the left and right hand with
-#'  coloured dots.
+#'  coloured dots. Markers that lie outside the plotted keyboard range or omitted.
 #' @param colour_left,colour_right the colours to be used to mark keys. By
 #'  default, a blue colour is used for the left hand and a red colour for the
 #'  right hand.
@@ -59,12 +59,15 @@ plot_piano <- function(lower = "A2", upper = "c5",
   piano_plot <- add_key_labels(piano_plot, keys_f, labels, black_labels)
 
   # prepare the markers for each hand
+  x_range = range(keys_f$white$xmin)
   markers <- dplyr::bind_rows(
       get_key_markers(mark_left) %>%
         dplyr::mutate(hand = "left"),
       get_key_markers(mark_right) %>%
         dplyr::mutate(hand = "right")
-    )
+    ) %>%
+    # drop markers that are outside of the keyboard range
+    dplyr::filter(dplyr::between(.data$x, x_range[1], x_range[2]))
 
   # add the markers. Draw them as circles, not points, in order to be able to
   # specify their size in the same units as the key width.

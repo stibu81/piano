@@ -31,7 +31,7 @@ or black keys, respectively and \code{"all"} to show labels for all keys.}
 of the black keys.}
 
 \item{mark_left, mark_right}{mark keys for the left and right hand with
-coloured dots.}
+coloured dots. Markers that lie outside the plotted keyboard range or omitted.}
 
 \item{colour_left, colour_right}{the colours to be used to mark keys. By
 default, a blue colour is used for the left hand and a red colour for the
