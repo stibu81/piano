@@ -56,5 +56,3 @@ test_that("plot_piano() works with markers and range restriction", {
                 mark_right = c("A", "c", "d2"))
   )
 })
-
-

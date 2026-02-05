@@ -55,4 +55,3 @@ plot_piano("F", "c3",
            mark_left = c("e", "bb", "d1"),
            mark_right = c("e1", "a1", "c2"))
 ```
-
