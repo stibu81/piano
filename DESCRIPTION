@@ -21,3 +21,10 @@ Suggests:
     testthat (>= 3.0.0),
     vdiffr
 Config/testthat/edition: 3
+Collate: 
+    'notes.R'
+    'data.R'
+    'key_markers.R'
+    'keys.R'
+    'piano-package.R'
+    'plot.R'
