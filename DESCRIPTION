@@ -14,7 +14,8 @@ Imports:
     ggplot2,
     ggforce,
     rlang,
-    cli
+    cli,
+    stringr
 Suggests: 
     spelling,
     testthat (>= 3.0.0),
