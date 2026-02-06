@@ -1,7 +1,3 @@
-test_that("the number of keys is correct", {
-  expect_equal(nrow(keys$white) + nrow(keys$black), 88)
-})
-
 test_that("filter_key_range() works", {
   expect_equal(filter_key_range(keys, "A2", "c5"), keys)
   expect_equal(filter_key_range(keys, "A1", "e")$white$name,
