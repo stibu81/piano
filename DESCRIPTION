@@ -28,3 +28,4 @@ Collate:
     'keys.R'
     'piano-package.R'
     'plot.R'
+    'scales.R'
