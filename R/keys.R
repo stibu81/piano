@@ -49,3 +49,12 @@ verify_key_names <- function(key_names, type = c("all", "white", "black"),
 
   return(TRUE)
 }
+
+
+# decompose key name into the note name and the numeric part
+decompose_key_names <- function(key_names) {
+  list(
+    notes = stringr::str_remove(key_names, "\\d"),
+    numbers = stringr::str_remove(key_names, "[A-Ga-g#]+")
+  )
+}

@@ -32,3 +32,12 @@ test_that("verify_key_names() works", {
   expect_error(verify_key_names(c("C", "d", "eb4", "g#2"), type = "black"),
                "C and d are not valid note names")
 })
+
+
+test_that("decompose_key_names() works", {
+  expect_equal(
+    decompose_key_names(c("C", "Eb1", "F#1", "e", "g#2", "bb3", "a4", "")),
+    list(notes = c("C", "Eb", "F#", "e", "g#", "bb", "a", ""),
+         numbers = c("", "1", "1", "", "2", "3", "4", ""))
+  )
+})
