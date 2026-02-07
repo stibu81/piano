@@ -11,10 +11,10 @@ get_key_markers <- function(key_names = c()) {
 
   # prepare the data for the relevant keys
   markers <- dplyr::bind_rows(
-      keys$white,
-      keys$black %>%
+      keys_data$white,
+      keys_data$black %>%
         dplyr::rename(name = "name_sharp"),
-      keys$black %>%
+      keys_data$black %>%
         dplyr::rename(name = "name_flat")
     ) %>%
     dplyr::filter(.data$name %in% key_names)

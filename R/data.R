@@ -4,7 +4,7 @@
 # Define an object that contains data on white and black keys.
 # Note names use the numbered Helmholtz pitch notation where a standard
 # 88 key piano ranges from A2 to c5
-keys <- local({
+keys_data <- local({
   # white keys
   c_major <- c("C", "D", "E", "F", "G", "A", "B")
   n8 <- 7
@@ -63,15 +63,15 @@ keys <- local({
 # create two sequences of three octaves of note names that can be used to
 # extract major scales.
 
-notes <- local({
+notes_data <- local({
 
   # pick the x-coordinate of C1 and c1. This is the range we want to cover
-  xcs <- keys$white$xmin[keys$white$name %in% c("C", "c1")]
+  xcs <- keys_data$white$xmin[keys_data$white$name %in% c("C", "c1")]
 
   generate_note_sequence <- function(accidentals) {
     dplyr::bind_rows(
-        keys$white %>% dplyr::select("name", "xmin"),
-        keys$black %>%
+        keys_data$white %>% dplyr::select("name", "xmin"),
+        keys_data$black %>%
           dplyr::select(name = paste0("name_", accidentals), "xmin")
       ) %>%
       dplyr::filter(dplyr::between(.data$xmin, xcs[1], xcs[2])) %>%
@@ -91,6 +91,6 @@ notes <- local({
 })
 
 
-# Define the keys that are written with sharps and flats
-major_keys <- list(flat = c("F", "Bb", "Eb", "Ab", "Db", "Gb"),
-                   sharp = c("G", "D", "A", "E", "B", "F#"))
+# Define the major keys that are written with sharps and flats
+major_keys_data <- list(flat = c("F", "Bb", "Eb", "Ab", "Db", "Gb"),
+                        sharp = c("G", "D", "A", "E", "B", "F#"))

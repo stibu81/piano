@@ -19,19 +19,19 @@ get_major_scale <- function(key, n_octave = 1L) {
 
   # check whether the key uses sharps or flats.
   # for "C" it does not matter => use sharps
-  if (key %in% c("C", major_keys$sharp)) {
-    this_notes <- notes$sharp
-  } else if (key %in% major_keys$flat) {
-    this_notes <- notes$flat
+  if (key %in% c("C", major_keys_data$sharp)) {
+    notes <- notes_data$sharp
+  } else if (key %in% major_keys_data$flat) {
+    notes <- notes_data$flat
   } else {
     cli::cli_abort("'{key}' is not a valid key.")
   }
 
   # extract one octave
   major_intervals <- c(0, 1, 2, 2.5, 3.5, 4.5, 5.5, 6)
-  root_rank <- this_notes$rank[this_notes$name == key][1]
+  root_rank <- notes$rank[notes$name == key][1]
   scale_ranks <- root_rank + major_intervals
-  scale <- this_notes$name[this_notes$rank %in% scale_ranks]
+  scale <- notes$name[notes$rank %in% scale_ranks]
 
   # handle enharmonic equivalences
   if (key == "Gb") {

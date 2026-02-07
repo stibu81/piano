@@ -34,8 +34,10 @@ verify_key_names <- function(key_names, type = c("all", "white", "black"),
   type <- match.arg(type)
 
   valid_names <- c(
-    if (type %in% c("all", "white")) keys$white$name,
-    if (type %in% c("all", "black")) c(keys$black$name_sharp, keys$black$name_flat)
+    if (type %in% c("all", "white")) keys_data$white$name,
+    if (type %in% c("all", "black")) {
+      c(keys_data$black$name_sharp, keys_data$black$name_flat)
+    }
   )
 
   bad_names <- setdiff(key_names, valid_names)
