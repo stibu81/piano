@@ -11,3 +11,12 @@ test_that("notes_tolower() works", {
     c("a", "c1", "d#", "gb2", "bb", "eb3")
   )
 })
+
+test_that("get_enharmonic_equivalent() works", {
+  expect_equal(
+    get_enharmonic_equivalent(
+      c("C1", "d", "f#2", "bb1", "F", "G", "db2", "a4")
+    ),
+    c("B#2", "d", "gb2", "a#1", "E#", "G", "c#2", "a4")
+  )
+})
