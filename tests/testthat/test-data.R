@@ -6,6 +6,17 @@ test_that("the number of keys is correct", {
 })
 
 
+test_that("only B, C, E, F have enharmonic equivalents in white keys", {
+  expect_all_true(
+    keys_data$white$enh_equiv[str_detect(keys_data$white$name, "^[BCEFbcef]")] != ""
+  )
+  expect_all_equal(
+    keys_data$white$enh_equiv[!str_detect(keys_data$white$name, "^[BCEFbcef]")],
+    ""
+  )
+})
+
+
 test_that("the notes data is correct", {
   # same ranks for flats and sharps
   expect_equal(notes_data$sharp$rank, notes_data$flat$rank)
