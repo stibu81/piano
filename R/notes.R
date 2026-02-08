@@ -68,3 +68,30 @@ notes_toupper <- function(notes) {
 notes_tolower <- function(notes) {
   tolower(notes)
 }
+
+
+#' Does a Note Name Contain an Accidental
+#' 
+#' @param notes a vector of notes names
+#' @param which character indicating the type of accidental to look for.
+#'  One of "any", "sharp", "flat".
+#' 
+#' @return
+#' a logical vector indicating whether the note names in `notes`
+#' contain an accidental.
+#' 
+#' @export
+
+has_accidental <- function(notes, which = c("any", "sharp", "flat")) {
+
+  which <- match.arg(which)
+
+  verify_key_names(notes)
+
+  acc_pattern <- switch(which,
+                        "any" = "(b|#)",
+                        "sharp" = "#",
+                        "flat" = "b")
+  stringr::str_detect(notes, paste0("^[A-Ga-g]", acc_pattern))
+
+}

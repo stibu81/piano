@@ -20,3 +20,21 @@ test_that("get_enharmonic_equivalent() works", {
     c("B#2", "d", "gb2", "a#1", "E#", "G", "c#2", "a4")
   )
 })
+
+
+test_that("has_accidental() works", {
+  expect_equal(
+    has_accidental(c("C#1", "Bb1", "d3", "eb", "bb3", "g2", "Bb", "bb", "f#2")),
+    c(TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE)
+  )
+  expect_equal(
+    has_accidental(c("C#1", "Bb1", "d3", "eb", "bb3", "g2", "Bb", "bb", "f#2"),
+                   "flat"),
+    c(FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE)
+  )
+  expect_equal(
+    has_accidental(c("C#1", "Bb1", "d3", "eb", "bb3", "g2", "Bb", "bb", "f#2"),
+                   "sharp"),
+    c(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE)
+  )
+})
