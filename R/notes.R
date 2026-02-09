@@ -1,3 +1,66 @@
+#' Flatten or Sharpen a Note
+#' 
+#' A character vector of note names is flattened or sharpened. Double
+#' accidentals are converted to notes in the C major scales.
+#' 
+#' @param notes a character vector of valid note names.
+#' 
+#' @returns
+#' a character vector of valid note names that are either a half-tone
+#' lower or higher than `notes`.
+#' 
+#' @export
+
+flatten <- function(notes) {
+
+  verify_key_names(notes)
+  c_major_scale <- get_major_scale("C", 2L)
+
+  # there are multiple types of notes that need to be treated separately:
+  # 1. notes containing a sharp => remove the sharp
+  # 2. notes without an accidental => add a flat
+  # 3. notes with a flat corresponding to a black key
+  #   => enharmonic equivalent can be handled like 1.
+  # 4. notes with a flat corresponding to a white key, i.e. Fb and Cb
+  #   => enharmonic equivalent can be handled like 2.
+  has_flat <- has_accidental(notes, "flat")
+  notes[has_flat] <- get_enharmonic_equivalent(notes[has_flat])
+  dplyr::case_when(
+    has_accidental(notes, "sharp") ~ stringr::str_remove(notes, "#"),
+    !has_accidental(notes, "flat") ~ add_accidental(notes, "b")
+  )
+}
+
+
+#' @rdname flatten
+#' @export
+
+sharpen <- function(notes) {
+
+  verify_key_names(notes)
+  c_major_scale <- get_major_scale("C", 2L)
+
+  # there are multiple types of notes that need to be treated separately:
+  # 1. notes containing a flat => remove the flat
+  # 2. notes without an accidental => add a sharp
+  # 3. notes with a sharp corresponding to a black key
+  #   => enharmonic equivalent can be handled like 1.
+  # 4. notes with a sharp corresponding to a white key, i.e. Fb and Cb
+  #   => enharmonic equivalent can be handled like 2.
+  has_sharp <- has_accidental(notes, "sharp")
+  notes[has_sharp] <- get_enharmonic_equivalent(notes[has_sharp])
+  dplyr::case_when(
+    has_accidental(notes, "flat") ~ stringr::str_remove(notes, "b"),
+    !has_accidental(notes, "sharp") ~ add_accidental(notes, "#")
+  )
+}
+
+
+# helper function to add an accidental to a note
+add_accidental <- function(notes, accidental) {
+  stringr::str_replace(notes, "^([A-Ga-g])", paste0("\\1", accidental))
+}
+
 #' Get the Enharmonic Equivalent of a Note
 #' 
 #' This function returns the enharmonic equivalent of notes. Notes with 

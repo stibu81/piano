@@ -38,3 +38,21 @@ test_that("has_accidental() works", {
     c(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE)
   )
 })
+
+
+test_that("flatten() works", {
+  expect_equal(
+    flatten(c("C1", "Eb", "f#", "e#", "fb1", "bb1", "b#2", "cb3", "a#4")),
+    c("Cb1", "D", "f", "e", "eb1", "a1", "b2", "bb2", "a4")
+  )
+  expect_equal(flatten(get_major_scale("D")), get_major_scale("Db"))
+})
+
+
+test_that("sharpen() works", {
+  expect_equal(
+    sharpen(c("C1", "Eb", "f#", "e#", "fb1", "bb1", "b#2", "cb3", "a#4")),
+    c("C#1", "E", "g", "f#", "f1", "b1", "c#3", "c3", "b4")
+  )
+  expect_equal(sharpen(get_major_scale("F")), get_major_scale("F#"))
+})
