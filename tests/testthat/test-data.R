@@ -6,13 +6,16 @@ test_that("the number of keys is correct", {
 })
 
 
-test_that("only B, C, E, F have enharmonic equivalents in white keys", {
-  expect_all_true(
-    keys_data$white$enh_equiv[str_detect(keys_data$white$name, "^[BCEFbcef]")] != ""
+test_that("number of accidentals on white keys", {
+  # for the flats, the first character must be ignored because it can
+  # also be a b.
+  expect_equal(
+    str_count(str_sub(keys_data$white$name_flat, 2), "b"),
+    c(2, 1, 2, rep(c(2, 1, 2, 2, 2, 1, 2), 7))
   )
-  expect_all_equal(
-    keys_data$white$enh_equiv[!str_detect(keys_data$white$name, "^[BCEFbcef]")],
-    ""
+  expect_equal(
+    str_count(keys_data$white$name_sharp, "#"),
+    c(2, 2, 1, rep(c(2, 2, 1, 2, 2, 2, 1), 7))
   )
 })
 
