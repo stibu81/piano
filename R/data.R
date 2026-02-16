@@ -16,9 +16,6 @@ keys_data <- local({
       ),
       c(rep(2, 2), rep(1, 7), rep("", 14), rep(1:4, each = 7), 5)
     ),
-    # add column for enharmonic equivalents. The non-empty entries will be
-    # filled below.
-    enh_equiv = "",
     xmin = c(
       c(-2, -1),
       rep(0:6, n8) + 7 * rep(0:(n8 - 1), each = 7),
@@ -29,16 +26,19 @@ keys_data <- local({
     ymax = 6.5
   )
 
-  # add enharmonic equivalents for notes where one with just one accidental exists
-  # get all the rows with B, C, E, F
-  i_bcef <- which(stringr::str_detect(white$name, "^[BCEFbcef]"))
-  # switch them pair-wiese and add accidentals
-  i_ex <- rep(2:1, length.out = length(i_bcef)) + 
-    rep(seq(0, by = 2, length.out = length(i_bcef) / 2), each = 2)
-  white$enh_equiv[i_bcef] <- white$name[i_bcef][i_ex] %>% 
-    # add accidentals: b to C, F, # to B, E
-    stringr::str_replace("^([CFcf])", "\\1b") %>% 
-    stringr::str_replace("^([BEbe])", "\\1#")
+  # add names with accidentals for white keys
+  white <- white %>% 
+    dplyr::mutate(
+      name_flat = c(.data$name[-1], "d5") %>%
+        # add one flat everywhere, add a second one only where needed
+        stringr::str_replace("^([A-Ga-g])", "\\1b") %>% 
+        stringr::str_replace("^([^CcFf])", "\\1b"),
+      name_sharp = c("G2", utils::head(.data$name, -1)) %>%
+        # add one sharp everywhere, add a second one only where needed
+        stringr::str_replace("^([A-Ga-g])", "\\1#") %>% 
+        stringr::str_replace("^([^EeBb])", "\\1#"),
+      .after = "name"
+    )
 
   # black keys
   sharps <- c_major[c(1:2, 4:6)]
