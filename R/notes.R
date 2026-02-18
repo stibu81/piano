@@ -81,20 +81,26 @@ add_accidental <- function(notes, accidental) {
 get_enharmonic_equivalent <- function(notes) {
 
   verify_key_names(notes)
-
+  
   # compile a table of enharmonic equivalents
   equiv_table <- dplyr::bind_rows(
     keys_data$white %>% 
-      dplyr::select("name", equiv = "enh_equiv") %>% 
-      dplyr::filter(.data$equiv != ""),
+      dplyr::select(name = "name_sharp", equiv = "name"),
     keys_data$white %>% 
-      dplyr::select(name = "enh_equiv", equiv = "name") %>% 
-      dplyr::filter(.data$name != ""),
+      dplyr::select(name = "name_flat", equiv = "name"),
+    keys_data$white %>% 
+      dplyr::select(name = "name", equiv = "name_sharp"),
+    keys_data$white %>% 
+      dplyr::select(name = "name", equiv = "name_flat"),
     keys_data$black %>% 
       dplyr::select(name = "name_sharp", equiv = "name_flat"),
     keys_data$black %>% 
       dplyr::select(name = "name_flat", equiv = "name_sharp")
   )
+
+  # drop double accidentals
+  equiv_table <- equiv_table %>% 
+    dplyr::filter(!stringr::str_detect(.data$equiv, "^[A-Ga-g](bb|##)"))
 
   # use a join to determine the equivalents. If no result is found
   # in the table, keep the note as it is.
