@@ -13,11 +13,28 @@ test_that("notes_tolower() works", {
 })
 
 test_that("get_enharmonic_equivalent() works", {
+  # without double accidentals
   expect_equal(
     get_enharmonic_equivalent(
-      c("C1", "d", "f#2", "bb1", "F", "G", "db2", "a4")
+      c("C1", "d", "f#2", "bb1", "F", "G", "e1", "gbb1", "db2", "f##3", "a4")
     ),
-    c("B#2", "d", "gb2", "a#1", "E#", "G", "c#2", "a4")
+    c("B#2", "d", "gb2", "a#1", "E#", "G", "fb1", "f1", "c#2", "g3", "a4")
+  )
+  # with double flats
+  expect_equal(
+    get_enharmonic_equivalent(
+      c("C1", "d", "f#2", "bb1", "F", "G", "e1", "gbb1", "db2", "f##3", "a4"),
+      use_double_accidentals = "flat"
+    ),
+    c("B#2", "ebb", "gb2", "a#1", "E#", "Abb", "fb1", "f1", "c#2", "g3", "bbb4")
+  )
+  # with double sharps
+  expect_equal(
+    get_enharmonic_equivalent(
+      c("C1", "d", "f#2", "bb1", "F", "G", "e1", "gbb1", "db2", "f##3", "a4"),
+      use_double_accidentals = "sharp"
+    ),
+    c("B#2", "c##", "gb2", "a#1", "E#", "F##", "fb1", "f1", "c#2", "g3", "g##4")
   )
 })
 

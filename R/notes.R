@@ -61,6 +61,7 @@ add_accidental <- function(notes, accidental) {
   stringr::str_replace(notes, "^([A-Ga-g])", paste0("\\1", accidental))
 }
 
+
 #' Get the Enharmonic Equivalent of a Note
 #' 
 #' This function returns the enharmonic equivalent of notes. Notes with 
@@ -71,6 +72,11 @@ add_accidental <- function(notes, accidental) {
 #' accidental (e.g., B => Cb, F => E#).
 #' 
 #' @param notes a vector of valid note names.
+#' @param use_double_accidentals logical indicating whether enharmonic
+#'  equivalents involving double accidentals (i.e. D => C##) should be
+#'  returned. For white keys that have an enharmonic equivalent with
+#'  only accidental that one is preferred independent of the setting of
+#'  `use_double_accidentals`. E.g., for C, B# is preferred over Dbb.
 #' 
 #' @returns
 #' character vector with note names representing the enharmonic
@@ -78,9 +84,13 @@ add_accidental <- function(notes, accidental) {
 #' 
 #' @export
 
-get_enharmonic_equivalent <- function(notes) {
+get_enharmonic_equivalent <- function(
+  notes,
+  use_double_accidentals = c("none", "sharp", "flat")
+) {
 
   verify_key_names(notes)
+  use_double_accidentals <- match.arg(use_double_accidentals)
   
   # compile a table of enharmonic equivalents
   equiv_table <- dplyr::bind_rows(
@@ -98,9 +108,28 @@ get_enharmonic_equivalent <- function(notes) {
       dplyr::select(name = "name_flat", equiv = "name_sharp")
   )
 
-  # drop double accidentals
+  # filter the equivalents depending on the choice for the double accidentals
+  # create a pattern that matches the double accidentals to DROP.
+  dbl_acc_pattern <- paste0(
+    "^[A-Ga-g](",
+    if (use_double_accidentals %in% c("none", "sharp")) "bb",
+    if (use_double_accidentals == "none") "|",
+    if (use_double_accidentals %in% c("none", "flat")) "##",
+    ")"
+  )
   equiv_table <- equiv_table %>% 
-    dplyr::filter(!stringr::str_detect(.data$equiv, "^[A-Ga-g](bb|##)"))
+    dplyr::filter(!stringr::str_detect(.data$equiv, dbl_acc_pattern))
+  
+  # if a note has two equivalents, prefer the one with a single accidental
+  # notes with double accidentals contain three non-numeric characters.
+  if (use_double_accidentals != "none") {
+    dups <- equiv_table$name[duplicated(equiv_table$name)]
+    equiv_table <- equiv_table %>% 
+      dplyr::filter(
+        !.data$name %in% dups |
+          stringr::str_count(equiv_table$equiv, "[^1-9]") < 3
+      )
+  }
 
   # use a join to determine the equivalents. If no result is found
   # in the table, keep the note as it is.
