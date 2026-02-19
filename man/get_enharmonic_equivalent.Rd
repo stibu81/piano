@@ -4,10 +4,19 @@
 \alias{get_enharmonic_equivalent}
 \title{Get the Enharmonic Equivalent of a Note}
 \usage{
-get_enharmonic_equivalent(notes)
+get_enharmonic_equivalent(
+  notes,
+  use_double_accidentals = c("none", "sharp", "flat")
+)
 }
 \arguments{
 \item{notes}{a vector of valid note names.}
+
+\item{use_double_accidentals}{logical indicating whether enharmonic
+equivalents involving double accidentals (i.e. D => C##) should be
+returned. For white keys that have an enharmonic equivalent with
+only accidental that one is preferred independent of the setting of
+\code{use_double_accidentals}. E.g., for C, B# is preferred over Dbb.}
 }
 \value{
 character vector with note names representing the enharmonic
