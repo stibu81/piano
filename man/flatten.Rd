@@ -5,12 +5,15 @@
 \alias{sharpen}
 \title{Flatten or Sharpen a Note}
 \usage{
-flatten(notes)
+flatten(notes, use_double_accidentals = TRUE)
 
-sharpen(notes)
+sharpen(notes, use_double_accidentals = TRUE)
 }
 \arguments{
 \item{notes}{a character vector of valid note names.}
+
+\item{use_double_accidentals}{should double accidentals be used, i.e.,
+should a second accidental be added if there already is one.}
 }
 \value{
 a character vector of valid note names that are either a half-tone
