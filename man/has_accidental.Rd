@@ -4,13 +4,20 @@
 \alias{has_accidental}
 \title{Does a Note Name Contain an Accidental}
 \usage{
-has_accidental(notes, which = c("any", "sharp", "flat"))
+has_accidental(
+  notes,
+  which = c("any", "sharp", "flat"),
+  number = c("any", "single", "double")
+)
 }
 \arguments{
 \item{notes}{a vector of notes names}
 
 \item{which}{character indicating the type of accidental to look for.
 One of "any", "sharp", "flat".}
+
+\item{number}{character indicating the number of accidentals that are expected.
+One of "any", "single", "double".}
 }
 \value{
 a logical vector indicating whether the note names in \code{notes}
