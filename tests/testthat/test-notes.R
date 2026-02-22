@@ -117,19 +117,53 @@ expect_equal(
 })
 
 
-test_that("flatten() works", {
+test_that("flatten() works without double accidentals", {
   expect_equal(
-    flatten(c("C1", "Eb", "f#", "e#", "fb1", "bb1", "b#2", "cb3", "a#4")),
-    c("Cb1", "D", "f", "e", "eb1", "a1", "b2", "bb2", "a4")
+    flatten(
+      c("C1", "Eb", "f#", "e#", "fb1", "bb1", "b#2", "cb3", "a#4", "dbb3", "g##2"),
+      use_double_accidentals = FALSE
+    ),
+    c("Cb1", "D", "f", "e", "eb1", "a1", "b2", "bb2", "a4", "cb3", "g#2")
   )
-  expect_equal(flatten(get_major_scale("D")), get_major_scale("Db"))
+  expect_equal(flatten(get_major_scale("D"),  use_double_accidentals = FALSE),
+               get_major_scale("Db"))
 })
 
 
-test_that("sharpen() works", {
+test_that("sharpen() works without double accidentals", {
   expect_equal(
-    sharpen(c("C1", "Eb", "f#", "e#", "fb1", "bb1", "b#2", "cb3", "a#4")),
-    c("C#1", "E", "g", "f#", "f1", "b1", "c#3", "c3", "b4")
+    sharpen(
+      c("C1", "Eb", "f#", "e#", "fb1", "bb1", "b#2", "cb3", "a#4", "dbb3", "g##2"),
+      use_double_accidentals = FALSE
+    ),
+    c("C#1", "E", "g", "f#", "f1", "b1", "c#3", "c3", "b4", "db3", "a#2")
   )
-  expect_equal(sharpen(get_major_scale("F")), get_major_scale("F#"))
+  expect_equal(sharpen(get_major_scale("F"), use_double_accidentals = FALSE),
+               get_major_scale("F#"))
+})
+
+
+test_that("flatten() works with double accidentals", {
+  expect_equal(
+    flatten(
+      c("C1", "Eb", "f#", "e#", "fb1", "bb1", "b#2", "cb3", "a#4", "dbb3", "g##2"),
+      use_double_accidentals = TRUE
+    ),
+    c("Cb1", "Ebb", "f", "e", "eb1", "bbb1", "b2", "bb2", "a4", "cb3", "g#2")
+  )
+  expect_equal(flatten(get_major_scale("D"), use_double_accidentals = TRUE),
+               get_major_scale("Db"))
+})
+
+
+test_that("sharpen() works with double accidentals", {
+  expect_equal(
+    sharpen(
+      c("C1", "Eb", "f#", "e#", "fb1", "bb1", "b#2", "cb3", "a#4", "dbb3", "g##2"),
+      use_double_accidentals = TRUE
+    ),
+    c("C#1", "E", "f##", "f#", "f1", "b1", "c#3", "c3", "a##4", "db3", "a#2")
+  )
+  expect_equal(sharpen(get_major_scale("F"), use_double_accidentals = TRUE), 
+               get_major_scale("F#"))
 })

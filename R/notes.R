@@ -4,6 +4,8 @@
 #' accidentals are converted to notes in the C major scales.
 #' 
 #' @param notes a character vector of valid note names.
+#' @param use_double_accidentals should double accidentals be used, i.e.,
+#'  should a second accidental be added if there already is one.
 #' 
 #' @returns
 #' a character vector of valid note names that are either a half-tone
@@ -11,23 +13,37 @@
 #' 
 #' @export
 
-flatten <- function(notes) {
+flatten <- function(notes, use_double_accidentals = TRUE) {
 
   verify_key_names(notes)
-  c_major_scale <- get_major_scale("C", 2L)
+
+  # double flats must be replaced by their enharmonic equivalent,
+  # because we don't want to add a third flat.
+  # equally, cb and fb must be replaced because they should not get a
+  # a second flat.
+  has_flat <- has_accidental(notes, "flat", "single")
+  has_double_flat <- has_accidental(notes, "flat", "double")
+  i_replace <- (has_flat & stringr::str_detect(notes, "^[CFcf]")) | has_double_flat
+  notes[i_replace] <- get_enharmonic_equivalent(notes[i_replace])
 
   # there are multiple types of notes that need to be treated separately:
   # 1. notes containing a sharp => remove the sharp
   # 2. notes without an accidental => add a flat
   # 3. notes with a flat corresponding to a black key
-  #   => enharmonic equivalent can be handled like 1.
-  # 4. notes with a flat corresponding to a white key, i.e. Fb and Cb
-  #   => enharmonic equivalent can be handled like 2.
-  has_flat <- has_accidental(notes, "flat")
-  notes[has_flat] <- get_enharmonic_equivalent(notes[has_flat])
-  dplyr::case_when(
-    has_accidental(notes, "sharp") ~ stringr::str_remove(notes, "#"),
-    !has_accidental(notes, "flat") ~ add_accidental(notes, "b")
+  #   => two options: with double accidentals, just add a flat (same as 2.),
+  #      without double accidentals, convert to enharmonic equivalent and add flat.
+  # 4. notes with a flat corresponding to a white key, i.e. Cb and Fb
+  #   => these have been converted to enharmonic equivalent => same as 2.
+  if (!use_double_accidentals) {
+    # all remaining flats correspond to black keys because the others
+    # have already been converted above.
+    has_flat <- has_accidental(notes, "flat", "single")
+    notes[has_flat] <- get_enharmonic_equivalent(notes[has_flat])
+  }
+  dplyr::if_else(
+    has_accidental(notes, "sharp"),
+    stringr::str_remove(notes, "#"),
+    add_accidental(notes, "b")
   )
 }
 
@@ -35,23 +51,38 @@ flatten <- function(notes) {
 #' @rdname flatten
 #' @export
 
-sharpen <- function(notes) {
+sharpen <- function(notes, use_double_accidentals = TRUE) {
 
   verify_key_names(notes)
-  c_major_scale <- get_major_scale("C", 2L)
+
+  # double sharps must be replaced by their enharmonic equivalent,
+  # because we don't want to add a third sharp.
+  # equally, b# and e# must be replaced because they should not get a
+  # a second sharp.
+  has_sharp <- has_accidental(notes, "sharp", "single")
+  has_double_sharp <- has_accidental(notes, "sharp", "double")
+  i_replace <- (has_sharp & stringr::str_detect(notes, "^[BEbe]")) | has_double_sharp
+  notes[i_replace] <- get_enharmonic_equivalent(notes[i_replace])
+
 
   # there are multiple types of notes that need to be treated separately:
   # 1. notes containing a flat => remove the flat
   # 2. notes without an accidental => add a sharp
   # 3. notes with a sharp corresponding to a black key
-  #   => enharmonic equivalent can be handled like 1.
-  # 4. notes with a sharp corresponding to a white key, i.e. Fb and Cb
-  #   => enharmonic equivalent can be handled like 2.
-  has_sharp <- has_accidental(notes, "sharp")
-  notes[has_sharp] <- get_enharmonic_equivalent(notes[has_sharp])
-  dplyr::case_when(
-    has_accidental(notes, "flat") ~ stringr::str_remove(notes, "b"),
-    !has_accidental(notes, "sharp") ~ add_accidental(notes, "#")
+  #   => two options: with double accidentals, just add a sharp (same as 2.),
+  #      without double accidentals, convert to enharmonic equivalent and add sharp.
+  # 4. notes with a sharp corresponding to a white key, i.e. E# and B#
+  #   => these have been converted to enharmonic equivalent => same as 2.
+  if (!use_double_accidentals) {
+    # all remaining sharps correspond to black keys because the others
+    # have already been converted above.
+    has_sharp <- has_accidental(notes, "sharp", "single")
+    notes[has_sharp] <- get_enharmonic_equivalent(notes[has_sharp])
+  }
+  dplyr::if_else(
+    has_accidental(notes, "flat"),
+    stringr::str_remove(notes, "b"),
+    add_accidental(notes, "#")
   )
 }
 
@@ -183,21 +214,21 @@ notes_tolower <- function(notes) {
 #' @export
 
 has_accidental <- function(notes,
-which = c("any", "sharp", "flat"),
+                           which = c("any", "sharp", "flat"),
                            number = c("any", "single", "double")) {
 
   which <- match.arg(which)
-number <- match.arg(number)
+  number <- match.arg(number)
 
   verify_key_names(notes)
 
   # create the pattern for the accidentals: first, pick the appropriate
   # accidental, afterwards fix the multiplier.
   which_pattern <- switch(which,
-                        "any" = "(b|#)",
-                        "sharp" = "#",
-                        "flat" = "b")
-number_pattern <- switch(number,
+                          "any" = "(b|#)",
+                          "sharp" = "#",
+                          "flat" = "b")
+  number_pattern <- switch(number,
                            "any" = "",
                            "single" = "($|[^#b])",
                            "double" = "{2}")
