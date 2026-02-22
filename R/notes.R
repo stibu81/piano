@@ -173,6 +173,8 @@ notes_tolower <- function(notes) {
 #' @param notes a vector of notes names
 #' @param which character indicating the type of accidental to look for.
 #'  One of "any", "sharp", "flat".
+#' @param number character indicating the number of accidentals that are expected.
+#'  One of "any", "single", "double".
 #' 
 #' @return
 #' a logical vector indicating whether the note names in `notes`
@@ -180,16 +182,26 @@ notes_tolower <- function(notes) {
 #' 
 #' @export
 
-has_accidental <- function(notes, which = c("any", "sharp", "flat")) {
+has_accidental <- function(notes,
+which = c("any", "sharp", "flat"),
+                           number = c("any", "single", "double")) {
 
   which <- match.arg(which)
+number <- match.arg(number)
 
   verify_key_names(notes)
 
-  acc_pattern <- switch(which,
+  # create the pattern for the accidentals: first, pick the appropriate
+  # accidental, afterwards fix the multiplier.
+  which_pattern <- switch(which,
                         "any" = "(b|#)",
                         "sharp" = "#",
                         "flat" = "b")
-  stringr::str_detect(notes, paste0("^[A-Ga-g]", acc_pattern))
+number_pattern <- switch(number,
+                           "any" = "",
+                           "single" = "($|[^#b])",
+                           "double" = "{2}")
+  
+  stringr::str_detect(notes, paste0("^[A-Ga-g]", which_pattern, number_pattern))
 
 }

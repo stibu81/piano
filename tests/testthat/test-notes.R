@@ -39,20 +39,80 @@ test_that("get_enharmonic_equivalent() works", {
 })
 
 
-test_that("has_accidental() works", {
+test_that("has_accidental() works for any number of accidentals", {
   expect_equal(
-    has_accidental(c("C#1", "Bb1", "d3", "eb", "bb3", "g2", "Bb", "bb", "f#2")),
-    c(TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE)
+    has_accidental(
+      c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3")
+    ),
+    c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)
   )
-  expect_equal(
-    has_accidental(c("C#1", "Bb1", "d3", "eb", "bb3", "g2", "Bb", "bb", "f#2"),
-                   "flat"),
-    c(FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE)
+expect_equal(
+    has_accidental(
+      c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
+      which = "sharp"
+    ),
+    c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE)
   )
+expect_equal(
+    has_accidental(
+      c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
+      which = "flat"
+    ),
+    c(FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE)
+  )
+})
+
+
+test_that("has_accidental() works for single accidentals", {
   expect_equal(
-    has_accidental(c("C#1", "Bb1", "d3", "eb", "bb3", "g2", "Bb", "bb", "f#2"),
-                   "sharp"),
-    c(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE)
+    has_accidental(
+      c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
+      number = "single"
+    ),
+    c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE)
+  )
+expect_equal(
+    has_accidental(
+      c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
+      which = "sharp",
+      number = "single"
+    ),
+    c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE)
+  )
+expect_equal(
+    has_accidental(
+      c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
+      which = "flat",
+      number = "single"
+    ),
+    c(FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE)
+  )
+})
+
+
+test_that("has_accidental() works for double accidentals", {
+  expect_equal(
+    has_accidental(
+      c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
+      number = "double"
+    ),
+    c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
+  )
+expect_equal(
+    has_accidental(
+      c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
+      which = "sharp",
+      number = "double"
+    ),
+    c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE)
+  )
+expect_equal(
+    has_accidental(
+      c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
+      which = "flat",
+      number = "double"
+    ),
+    c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE)
   )
 })
 
