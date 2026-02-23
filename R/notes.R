@@ -122,22 +122,6 @@ get_enharmonic_equivalent <- function(
 
   verify_key_names(notes)
   use_double_accidentals <- match.arg(use_double_accidentals)
-  
-  # compile a table of enharmonic equivalents
-  equiv_table <- dplyr::bind_rows(
-    keys_data$white %>% 
-      dplyr::select(name = "name_sharp", equiv = "name"),
-    keys_data$white %>% 
-      dplyr::select(name = "name_flat", equiv = "name"),
-    keys_data$white %>% 
-      dplyr::select(name = "name", equiv = "name_sharp"),
-    keys_data$white %>% 
-      dplyr::select(name = "name", equiv = "name_flat"),
-    keys_data$black %>% 
-      dplyr::select(name = "name_sharp", equiv = "name_flat"),
-    keys_data$black %>% 
-      dplyr::select(name = "name_flat", equiv = "name_sharp")
-  )
 
   # filter the equivalents depending on the choice for the double accidentals
   # create a pattern that matches the double accidentals to DROP.

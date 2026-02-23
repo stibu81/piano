@@ -104,6 +104,23 @@ notes_data <- local({
 })
 
 
+# Create table of enharmonic equivalents. 
+equiv_table <- dplyr::bind_rows(
+  keys_data$white %>% 
+    dplyr::select(name = "name_sharp", equiv = "name"),
+  keys_data$white %>% 
+    dplyr::select(name = "name_flat", equiv = "name"),
+  keys_data$white %>% 
+    dplyr::select(name = "name", equiv = "name_sharp"),
+  keys_data$white %>% 
+    dplyr::select(name = "name", equiv = "name_flat"),
+  keys_data$black %>% 
+    dplyr::select(name = "name_sharp", equiv = "name_flat"),
+  keys_data$black %>% 
+    dplyr::select(name = "name_flat", equiv = "name_sharp")
+)
+
+
 # Define the major keys that are written with sharps and flats
 major_keys_data <- list(flat = c("F", "Bb", "Eb", "Ab", "Db", "Gb"),
                         sharp = c("G", "D", "A", "E", "B", "F#"))

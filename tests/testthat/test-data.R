@@ -47,3 +47,33 @@ test_that("the major_keys data is correct", {
     keys_data$black %>% filter(name_sharp == tail(major_keys_data$sharp, n = 1))
   )
 })
+
+
+test_that("every note has an enharmonic equivalent", {
+  expect_in(keys_data$white$name, equiv_table$name)
+  expect_in(keys_data$white$name_flat, equiv_table$name)
+  expect_in(keys_data$white$name_sharp, equiv_table$name)
+  expect_in(keys_data$black$name_flat, equiv_table$name)
+  expect_in(keys_data$black$name_sharp, equiv_table$name)
+})
+
+test_that("every note has the correct number of enharmonic equivalents", {
+  # notes have at most one equivalent without double accidental
+  equiv_table %>% 
+    filter(!has_accidental(equiv, number = "double")) %>% 
+    count(name) %>% 
+    pull(n) %>% 
+    expect_all_equal(1)
+  # all white keys (written without accidentals) have exactly two equivalents
+  equiv_table %>% 
+    filter(name %in% keys_data$white$name) %>%
+    count(name) %>% 
+    pull(n) %>% 
+    expect_all_equal(2)
+  # all other notes have exactly one equivalent
+  equiv_table %>% 
+    filter(!name %in% keys_data$white$name) %>%
+    count(name) %>% 
+    pull(n) %>% 
+    expect_all_equal(1)
+})
