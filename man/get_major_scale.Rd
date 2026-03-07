@@ -7,8 +7,8 @@
 get_major_scale(key, n_octave = 1L)
 }
 \arguments{
-\item{key}{character indicating the key. Supported are
-keys with up to six accidentals.}
+\item{key}{character indicating the key. All keys with roots
+involving at most one accidental are supported.}
 
 \item{n_octave}{integer indicating the number of octaves to
 return.}

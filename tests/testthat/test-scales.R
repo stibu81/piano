@@ -9,6 +9,10 @@ test_that("get_major_scale() works for one octave", {
                c("Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F", "Gb"))
   expect_equal(get_major_scale("F#"),
                c("F#", "G#", "A#", "B", "C#", "D#", "E#", "F#"))
+  expect_equal(get_major_scale("G#"),
+               c("G#", "A#", "B#", "C#", "D#", "E#", "F##", "G#"))
+  expect_equal(get_major_scale("A#"),
+               c("A#", "B#", "C##", "D#", "E#", "F##", "G##", "A#"))
 })
 
 
@@ -25,6 +29,6 @@ test_that("get_major_scale() works for multiple octaves", {
 
 test_that("error messages for get_major_scale() work", {
   expect_error(get_major_scale("Bb", "1"), "'n_octave' must be a numeric value.")
-  expect_error(get_major_scale("D#"), "'D#' is not a valid key")
+  expect_error(get_major_scale("B#"), "'B#' is not a valid key")
   expect_error(get_major_scale("C", 0), "'n_octave' must be a positive integer")
 })

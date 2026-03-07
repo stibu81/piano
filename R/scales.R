@@ -1,7 +1,7 @@
 #' Get the Notes of a Major Scale
 #' 
-#' @param key character indicating the key. Supported are
-#'  keys with up to six accidentals.
+#' @param key character indicating the key. All keys with roots
+#' involving at most one accidental are supported.
 #' @param n_octave integer indicating the number of octaves to 
 #'  return.
 #' 
@@ -15,6 +15,18 @@ get_major_scale <- function(key, n_octave = 1L) {
   n_octave <- as.integer(n_octave)
   if (n_octave < 1) {
     cli::cli_abort("'n_octave' must be a positive integer.")
+  }
+
+  # scales involving double accidentals are created by
+  # getting the scale without accidental and then moving it
+  # by a semi-tone. Prepare this here.
+  post_process <- \(x) x
+  if (key %in% "Gb") {
+    key <- "G"
+    post_process <- flatten
+  } else if (key %in% c("F#", "C#", "G#", "D#", "A#")) {
+    key <- stringr::str_remove(key, "#")
+    post_process <- sharpen
   }
 
   # check whether the key uses sharps or flats.
@@ -33,12 +45,8 @@ get_major_scale <- function(key, n_octave = 1L) {
   scale_ranks <- root_rank + major_intervals
   scale <- notes$name[notes$rank %in% scale_ranks]
 
-  # handle enharmonic equivalences
-  if (key == "Gb") {
-    scale[scale == "B"] <- "Cb"
-  } else if (key == "F#") {
-    scale[scale == "F"] <- "E#"
-  }
+  # apply the post-processing
+  scale <- post_process(scale)
 
   # if multiple octaves are requested, add them now
   if (n_octave > 1) {
