@@ -191,7 +191,7 @@ notes_tolower <- function(notes) {
 #' @param number character indicating the number of accidentals that are expected.
 #'  One of "any", "single", "double".
 #' 
-#' @return
+#' @returns
 #' a logical vector indicating whether the note names in `notes`
 #' contain an accidental.
 #' 

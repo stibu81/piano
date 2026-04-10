@@ -1,9 +1,19 @@
 #' Get the Notes of a Major Scale
 #' 
+#' `get_major_scale()` returns the note names for any major key with
+#' a root involving at most one accidental for an arbitrary number of
+#' octaves. `get_major_scale_with_alt()` returns two octaves of any major
+#' key with the alterations that can be used in chord definitions.
+#' 
 #' @param key character indicating the key. All keys with roots
 #' involving at most one accidental are supported.
 #' @param n_octave integer indicating the number of octaves to 
 #'  return.
+#' 
+#' @returns
+#' a named vector. The values are the note names (written with capital
+#' letters), the names correspond to the interval from the root
+#' starting at `"1"`.
 #' 
 #' @export
 
@@ -16,6 +26,8 @@ get_major_scale <- function(key, n_octave = 1L) {
   if (n_octave < 1) {
     cli::cli_abort("'n_octave' must be a positive integer.")
   }
+
+  key <- notes_toupper(key)
 
   # scales involving double accidentals are created by
   # getting the scale without accidental and then moving it
@@ -53,5 +65,30 @@ get_major_scale <- function(key, n_octave = 1L) {
     scale <- c(scale, rep(scale[-1], n_octave - 1))
   }
 
+  names(scale) <- as.character(seq_along(scale))
+
   scale
+}
+
+
+#' @rdname get_major_scale
+#' @export
+
+get_major_scale_with_alt <- function(key) {
+
+  scale <- get_major_scale(key, n_octave = 2)
+
+  # compute the alterations
+  i_alt_flat <- c(3, 5, 7, 9, 13)
+  alt_flat <- flatten(scale[i_alt_flat])
+  names(alt_flat) <- paste0(i_alt_flat, "b")
+  i_alt_sharp <- c(5, 9, 11)
+  alt_sharp <- sharpen(scale[i_alt_sharp])
+  names(alt_sharp) <- paste0(i_alt_sharp, "#")
+
+  # define a numeric vector that can be used for sorting
+  srt_vec <- c(1:15, i_alt_flat - .5, i_alt_sharp + .5)
+
+  c(scale, alt_flat, alt_sharp)[order(srt_vec)]
+  
 }

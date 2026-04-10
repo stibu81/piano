@@ -2,9 +2,12 @@
 % Please edit documentation in R/scales.R
 \name{get_major_scale}
 \alias{get_major_scale}
+\alias{get_major_scale_with_alt}
 \title{Get the Notes of a Major Scale}
 \usage{
 get_major_scale(key, n_octave = 1L)
+
+get_major_scale_with_alt(key)
 }
 \arguments{
 \item{key}{character indicating the key. All keys with roots
@@ -13,6 +16,14 @@ involving at most one accidental are supported.}
 \item{n_octave}{integer indicating the number of octaves to
 return.}
 }
+\value{
+a named vector. The values are the note names (written with capital
+letters), the names correspond to the interval from the root
+starting at \code{"1"}.
+}
 \description{
-Get the Notes of a Major Scale
+\code{get_major_scale()} returns the note names for any major key with
+a root involving at most one accidental for an arbitrary number of
+octaves. \code{get_major_scale_with_alt()} returns two octaves of any major
+key with the alterations that can be used in chord definitions.
 }
