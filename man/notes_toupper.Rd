@@ -10,8 +10,9 @@ notes_toupper(notes)
 notes_tolower(notes)
 }
 \arguments{
-\item{notes}{character vector of note names. The function does not check
-whether these are valid names.}
+\item{notes}{character vector of notes. The function does not check
+whether these are valid names. The functions can also process keys, but this will
+change their meaning, because, e.g., "C1" and "c1" are not the same key.}
 }
 \value{
 a character vector with transformed note names

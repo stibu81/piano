@@ -14,7 +14,7 @@
 #' @export
 
 flatten <- function(notes, use_double_accidentals = TRUE) {
-  verify_key_names(notes)
+  verify_keys(notes)
 
   # double flats must be replaced by their enharmonic equivalent,
   # because we don't want to add a third flat.
@@ -51,7 +51,7 @@ flatten <- function(notes, use_double_accidentals = TRUE) {
 #' @export
 
 sharpen <- function(notes, use_double_accidentals = TRUE) {
-  verify_key_names(notes)
+  verify_keys(notes)
 
   # double sharps must be replaced by their enharmonic equivalent,
   # because we don't want to add a third sharp.
@@ -116,7 +116,7 @@ get_enharmonic_equivalent <- function(
   notes,
   use_double_accidentals = c("none", "sharp", "flat")
 ) {
-  verify_key_names(notes)
+  verify_keys(notes)
   use_double_accidentals <- match.arg(use_double_accidentals)
 
   # filter the equivalents depending on the choice for the double accidentals
@@ -134,19 +134,19 @@ get_enharmonic_equivalent <- function(
   # if a note has two equivalents, prefer the one with a single accidental
   # notes with double accidentals contain three non-numeric characters.
   if (use_double_accidentals != "none") {
-    dups <- equiv_table$name[duplicated(equiv_table$name)]
+    dups <- equiv_table$key[duplicated(equiv_table$key)]
     equiv_table <- equiv_table %>%
       dplyr::filter(
-        !.data$name %in% dups |
+        !.data$key %in% dups |
           stringr::str_count(equiv_table$equiv, "[^1-9]") < 3
       )
   }
 
   # use a join to determine the equivalents. If no result is found
   # in the table, keep the note as it is.
-  dplyr::tibble(name = notes) %>%
-    dplyr::left_join(equiv_table, by = "name") %>%
-    dplyr::mutate(equiv = dplyr::coalesce(.data$equiv, .data$name)) %>%
+  dplyr::tibble(key = notes) %>%
+    dplyr::left_join(equiv_table, by = "key") %>%
+    dplyr::mutate(equiv = dplyr::coalesce(.data$equiv, .data$key)) %>%
     dplyr::pull("equiv")
 }
 
@@ -156,8 +156,9 @@ get_enharmonic_equivalent <- function(
 #' Convert note names to upper case or lower case and ensure that the accidental
 #' "b" remains lower case.
 #'
-#' @param notes character vector of note names. The function does not check
-#'  whether these are valid names.
+#' @param notes character vector of notes. The function does not check
+#'  whether these are valid names. The functions can also process keys, but this will
+#'  change their meaning, because, e.g., "C1" and "c1" are not the same key.
 #'
 #' @returns
 #' a character vector with transformed note names
@@ -200,7 +201,7 @@ has_accidental <- function(
   which <- match.arg(which)
   number <- match.arg(number)
 
-  verify_key_names(notes)
+  verify_keys(notes)
 
   # create the pattern for the accidentals: first, pick the appropriate
   # accidental, afterwards fix the multiplier.

@@ -23,21 +23,21 @@ test_that("filter_key_range() error messages work", {
 })
 
 
-test_that("verify_key_names() works", {
-  expect_true(verify_key_names(c("C", "d", "eb4", "g#2")))
-  expect_true(verify_key_names(c("cb2", "B#1", "e#", "fb3")))
-  expect_true(verify_key_names(c("bbb", "G##1", "dbb2", "f##3")))
-  expect_error(verify_key_names(c("D1", "C2")), "C2 is not a valid note name")
+test_that("verify_keys() works", {
+  expect_true(verify_keys(c("C", "d", "eb4", "g#2")))
+  expect_true(verify_keys(c("cb2", "B#1", "e#", "fb3")))
+  expect_true(verify_keys(c("bbb", "G##1", "dbb2", "f##3")))
+  expect_error(verify_keys(c("D1", "C2")), "C2 is not a valid note name")
   expect_error(
-    verify_key_names(c("D1", "C2", "a3", "d5")),
+    verify_keys(c("D1", "C2", "a3", "d5")),
     "C2 and d5 are not valid note names"
   )
   expect_error(
-    verify_key_names(c("C", "d", "eb4", "g#2"), type = "white"),
+    verify_keys(c("C", "d", "eb4", "g#2"), type = "white"),
     "eb4 and g#2 are not valid note names"
   )
   expect_error(
-    verify_key_names(c("C", "d", "eb4", "g#2"), type = "black"),
+    verify_keys(c("C", "d", "eb4", "g#2"), type = "black"),
     "C and d are not valid note names"
   )
 })

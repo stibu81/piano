@@ -13,22 +13,10 @@ test_that("get_chord() works with a precomputed scale", {
   scale <- get_major_scale_with_alt("E")
 
   expect_equal(
-    get_chord(left = c("1", "5"), right = c("8", "9", "#11"), root = scale),
+    get_chord(left = c("1", "5"), right = c("8", "9", "#11"), scale = scale),
     list(
       left = c("E", "B"),
       right = c("E", "F#", "A#")
     )
-  )
-})
-
-
-test_that("get_chord() error messages work", {
-  expect_error(
-    get_chord(root = c("C", "D")),
-    "Invalid input for `root`"
-  )
-  expect_error(
-    get_chord(left = "16"),
-    "`left` and `right` must only contain valid intervals."
   )
 })

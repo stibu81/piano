@@ -4,22 +4,26 @@
 \alias{get_chord}
 \title{Generate a Chord from Intervals}
 \usage{
-get_chord(left = c(), right = c(), root = "C")
+get_chord(left = c(), right = c(), root_note = "C", scale = NULL)
 }
 \arguments{
-\item{left, right}{character indicating the intervals to include in
-the left and right hand, respectively. Valid values are the interval names
+\item{left, right}{character indicating the degrees degrees to include in
+the left and right hand, respectively. Valid values are the degrees degrees
 returned by \code{\link[=get_major_scale_with_alt]{get_major_scale_with_alt()}}: all integers from 1 to 15 and
 the alterations b3, b5, #5, b7, b9, #9, #11, and b13.}
 
-\item{root}{Either a single note name indicating the root key, or the output
-of \code{\link[=get_major_scale_with_alt]{get_major_scale_with_alt()}} for a precomputed scale.}
+\item{root_note}{a single note indicating the root note of the chord.}
+
+\item{scale}{the output of \code{\link[=get_major_scale_with_alt]{get_major_scale_with_alt()}} for the key corresponding
+to the desired root note. This is mainly provided to improve performance, if many
+chords with the same root need to be computed, since \code{get_major_scale_with_alt()}
+is where the functions spends most its time.}
 }
 \value{
 A list with components \code{left} and \code{right}, each containing a
-character vector of note names.
+character vector of notes.
 }
 \description{
-Create a chord voicing by selecting intervals from a major scale with
+Create a chord voicing by selecting intervals from a major degrees with
 alterations.
 }

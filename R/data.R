@@ -110,20 +110,20 @@ notes_data <- local({
 })
 
 
-# Create table of enharmonic equivalents.
+# Create table of enharmonic equivalents of all keys
 equiv_table <- dplyr::bind_rows(
   keys_data$white %>%
-    dplyr::select(name = "name_sharp", equiv = "name"),
+    dplyr::select(key = "name_sharp", equiv = "name"),
   keys_data$white %>%
-    dplyr::select(name = "name_flat", equiv = "name"),
+    dplyr::select(key = "name_flat", equiv = "name"),
   keys_data$white %>%
-    dplyr::select(name = "name", equiv = "name_sharp"),
+    dplyr::select(key = "name", equiv = "name_sharp"),
   keys_data$white %>%
-    dplyr::select(name = "name", equiv = "name_flat"),
+    dplyr::select(key = "name", equiv = "name_flat"),
   keys_data$black %>%
-    dplyr::select(name = "name_sharp", equiv = "name_flat"),
+    dplyr::select(key = "name_sharp", equiv = "name_flat"),
   keys_data$black %>%
-    dplyr::select(name = "name_flat", equiv = "name_sharp")
+    dplyr::select(key = "name_flat", equiv = "name_sharp")
 )
 
 

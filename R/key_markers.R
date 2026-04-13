@@ -1,12 +1,12 @@
 # Get the coordinates for key markers
 
-get_key_markers <- function(key_names = c()) {
-  # to avoid unnecessary computations, return immediately for empty key_names
-  if (length(key_names) == 0) {
+get_key_markers <- function(keys = c()) {
+  # to avoid unnecessary computations, return immediately for empty keys
+  if (length(keys) == 0) {
     return(dplyr::tibble(name = character(0), x = numeric(0), y = numeric(0)))
   }
 
-  verify_key_names(key_names)
+  verify_keys(keys)
 
   # prepare the data for the relevant keys
   markers <- dplyr::bind_rows(
@@ -16,7 +16,7 @@ get_key_markers <- function(key_names = c()) {
     keys_data$black %>%
       dplyr::rename(name = "name_flat")
   ) %>%
-    dplyr::filter(.data$name %in% key_names)
+    dplyr::filter(.data$name %in% keys)
 
   # compute the coordinates for the dots
   markers <- markers %>%

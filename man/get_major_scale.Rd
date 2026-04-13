@@ -5,21 +5,19 @@
 \alias{get_major_scale_with_alt}
 \title{Get the Notes of a Major Scale}
 \usage{
-get_major_scale(key, n_octave = 1L)
+get_major_scale(tonic, n_octaves = 1L)
 
-get_major_scale_with_alt(key)
+get_major_scale_with_alt(tonic)
 }
 \arguments{
-\item{key}{character indicating the key. All keys with roots
+\item{tonic}{character indicating the tonic (musical key). All tonics
 involving at most one accidental are supported.}
 
-\item{n_octave}{integer indicating the number of octaves to
-return.}
+\item{n_octaves}{integer indicating the number of octaves to return.}
 }
 \value{
-a named vector. The values are the note names (written with capital
-letters), the names correspond to the interval from the root
-starting at \code{"1"}.
+a named vector. The values are the notes (written with capital
+letters), the names correspond to the scale degree starting at \code{"1"}.
 }
 \description{
 \code{get_major_scale()} returns the note names for any major key with
