@@ -1,20 +1,20 @@
 #' Get the Notes of a Major Scale
-#' 
+#'
 #' `get_major_scale()` returns the note names for any major key with
 #' a root involving at most one accidental for an arbitrary number of
 #' octaves. `get_major_scale_with_alt()` returns two octaves of any major
 #' key with the alterations that can be used in chord definitions.
-#' 
+#'
 #' @param key character indicating the key. All keys with roots
 #' involving at most one accidental are supported.
-#' @param n_octave integer indicating the number of octaves to 
+#' @param n_octave integer indicating the number of octaves to
 #'  return.
-#' 
+#'
 #' @returns
 #' a named vector. The values are the note names (written with capital
 #' letters), the names correspond to the interval from the root
 #' starting at `"1"`.
-#' 
+#'
 #' @export
 
 get_major_scale <- function(key, n_octave = 1L) {
@@ -75,7 +75,6 @@ get_major_scale <- function(key, n_octave = 1L) {
 #' @export
 
 get_major_scale_with_alt <- function(key) {
-
   scale <- get_major_scale(key, n_octave = 2)
 
   # compute the alterations
@@ -90,5 +89,4 @@ get_major_scale_with_alt <- function(key) {
   srt_vec <- c(1:15, i_alt_flat - .5, i_alt_sharp + .5)
 
   c(scale, alt_flat, alt_sharp)[order(srt_vec)]
-  
 }

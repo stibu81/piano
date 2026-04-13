@@ -33,8 +33,10 @@ test_that("the notes data is correct", {
   expect_match(notes_data$sharp$name, "^[A-G]")
   expect_match(notes_data$flat$name, "^[A-G]")
   # the notes without accidentals must be identical
-  expect_equal(notes_data$sharp %>% filter(!str_detect(name, "#")),
-               notes_data$flat %>% filter(!str_detect(name, "b")))
+  expect_equal(
+    notes_data$sharp %>% filter(!str_detect(name, "#")),
+    notes_data$flat %>% filter(!str_detect(name, "b"))
+  )
 })
 
 
@@ -59,21 +61,21 @@ test_that("every note has an enharmonic equivalent", {
 
 test_that("every note has the correct number of enharmonic equivalents", {
   # notes have at most one equivalent without double accidental
-  equiv_table %>% 
-    filter(!has_accidental(equiv, number = "double")) %>% 
-    count(name) %>% 
-    pull(n) %>% 
+  equiv_table %>%
+    filter(!has_accidental(equiv, number = "double")) %>%
+    count(name) %>%
+    pull(n) %>%
     expect_all_equal(1)
   # all white keys (written without accidentals) have exactly two equivalents
-  equiv_table %>% 
+  equiv_table %>%
     filter(name %in% keys_data$white$name) %>%
-    count(name) %>% 
-    pull(n) %>% 
+    count(name) %>%
+    pull(n) %>%
     expect_all_equal(2)
   # all other notes have exactly one equivalent
-  equiv_table %>% 
+  equiv_table %>%
     filter(!name %in% keys_data$white$name) %>%
-    count(name) %>% 
-    pull(n) %>% 
+    count(name) %>%
+    pull(n) %>%
     expect_all_equal(1)
 })

@@ -1,8 +1,6 @@
 # filter keys inbetween a lower and upper limit
 
-filter_key_range <- function(keys, lower, upper,
-                             error_call = rlang::caller_env()) {
-
+filter_key_range <- function(keys, lower, upper, error_call = rlang::caller_env()) {
   # find the key names in the table of white keys. Only white keys are allowed.
   i_lower <- which(keys$white == lower)
   if (length(i_lower) == 0) {
@@ -25,19 +23,18 @@ filter_key_range <- function(keys, lower, upper,
 }
 
 
-
 # verify that a character vector contains valid key names
 
-verify_key_names <- function(key_names, type = c("all", "white", "black"),
-                             error_call = rlang::caller_env()) {
-
+verify_key_names <- function(
+  key_names,
+  type = c("all", "white", "black"),
+  error_call = rlang::caller_env()
+) {
   type <- match.arg(type)
 
   valid_names <- c(
     if (type %in% c("all", "white")) {
-      c(keys_data$white$name,
-        keys_data$white$name_flat,
-        keys_data$white$name_sharp)
+      c(keys_data$white$name, keys_data$white$name_flat, keys_data$white$name_sharp)
     },
     if (type %in% c("all", "black")) {
       c(keys_data$black$name_sharp, keys_data$black$name_flat)

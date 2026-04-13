@@ -46,14 +46,14 @@ test_that("has_accidental() works for any number of accidentals", {
     ),
     c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)
   )
-expect_equal(
+  expect_equal(
     has_accidental(
       c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
       which = "sharp"
     ),
     c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE)
   )
-expect_equal(
+  expect_equal(
     has_accidental(
       c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
       which = "flat"
@@ -71,7 +71,7 @@ test_that("has_accidental() works for single accidentals", {
     ),
     c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE)
   )
-expect_equal(
+  expect_equal(
     has_accidental(
       c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
       which = "sharp",
@@ -79,7 +79,7 @@ expect_equal(
     ),
     c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE)
   )
-expect_equal(
+  expect_equal(
     has_accidental(
       c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
       which = "flat",
@@ -98,7 +98,7 @@ test_that("has_accidental() works for double accidentals", {
     ),
     c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
   )
-expect_equal(
+  expect_equal(
     has_accidental(
       c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
       which = "sharp",
@@ -106,7 +106,7 @@ expect_equal(
     ),
     c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE)
   )
-expect_equal(
+  expect_equal(
     has_accidental(
       c("D1", "C#1", "Bb1", "d3", "eb2", "bb3", "b#3", "Gbb1", "C##1", "bbb2", "d##3"),
       which = "flat",
@@ -125,8 +125,10 @@ test_that("flatten() works without double accidentals", {
     ),
     c("Cb1", "D", "f", "e", "eb1", "a1", "b2", "bb2", "a4", "cb3", "g#2")
   )
-  expect_equal(flatten(get_major_scale("D"),  use_double_accidentals = FALSE),
-               get_major_scale("Db"))
+  expect_equal(
+    flatten(get_major_scale("D"), use_double_accidentals = FALSE),
+    get_major_scale("Db")
+  )
 })
 
 
@@ -138,8 +140,10 @@ test_that("sharpen() works without double accidentals", {
     ),
     c("C#1", "E", "g", "f#", "f1", "b1", "c#3", "c3", "b4", "db3", "a#2")
   )
-  expect_equal(sharpen(get_major_scale("F"), use_double_accidentals = FALSE),
-               get_major_scale("F#"))
+  expect_equal(
+    sharpen(get_major_scale("F"), use_double_accidentals = FALSE),
+    get_major_scale("F#")
+  )
 })
 
 
@@ -151,8 +155,10 @@ test_that("flatten() works with double accidentals", {
     ),
     c("Cb1", "Ebb", "f", "e", "eb1", "bbb1", "b2", "bb2", "a4", "cb3", "g#2")
   )
-  expect_equal(flatten(get_major_scale("D"), use_double_accidentals = TRUE),
-               get_major_scale("Db"))
+  expect_equal(
+    flatten(get_major_scale("D"), use_double_accidentals = TRUE),
+    get_major_scale("Db")
+  )
 })
 
 
@@ -164,6 +170,8 @@ test_that("sharpen() works with double accidentals", {
     ),
     c("C#1", "E", "f##", "f#", "f1", "b1", "c#3", "c3", "a##4", "db3", "a#2")
   )
-  expect_equal(sharpen(get_major_scale("F"), use_double_accidentals = TRUE), 
-               get_major_scale("F#"))
+  expect_equal(
+    sharpen(get_major_scale("F"), use_double_accidentals = TRUE),
+    get_major_scale("F#")
+  )
 })
