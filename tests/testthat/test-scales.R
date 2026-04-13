@@ -51,8 +51,8 @@ test_that("error messages for get_major_scale() work", {
 
 
 test_that("get_major_scale_with_alt() works for one octave", {
-  alt_names <- c("1", "2", "3b", "3", "4", "5b", "5", "5#", "6", "7b", "7", "8",
-                 "9b", "9", "9#", "10", "11", "11#", "12", "13b", "13", "14", "15")
+  alt_names <- c("1", "2", "b3", "3", "4", "b5", "5", "#5", "6", "b7", "7", "8",
+                 "b9", "9", "#9", "10", "11", "#11", "12", "b13", "13", "14", "15")
   expect_equal(
     get_major_scale_with_alt("C"),
     setNames(

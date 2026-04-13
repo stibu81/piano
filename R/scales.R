@@ -81,10 +81,10 @@ get_major_scale_with_alt <- function(key) {
   # compute the alterations
   i_alt_flat <- c(3, 5, 7, 9, 13)
   alt_flat <- flatten(scale[i_alt_flat])
-  names(alt_flat) <- paste0(i_alt_flat, "b")
+  names(alt_flat) <- paste0("b", i_alt_flat)
   i_alt_sharp <- c(5, 9, 11)
   alt_sharp <- sharpen(scale[i_alt_sharp])
-  names(alt_sharp) <- paste0(i_alt_sharp, "#")
+  names(alt_sharp) <- paste0("#", i_alt_sharp)
 
   # define a numeric vector that can be used for sorting
   srt_vec <- c(1:15, i_alt_flat - .5, i_alt_sharp + .5)
