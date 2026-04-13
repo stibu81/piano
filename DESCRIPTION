@@ -23,6 +23,7 @@ Suggests:
 Config/testthat/edition: 3
 Collate: 
     'chords.R'
+    'conversion.R'
     'notes.R'
     'data.R'
     'key_markers.R'
