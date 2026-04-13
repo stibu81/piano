@@ -1,9 +1,9 @@
 test_that("get_chord() works with a root note", {
   expect_equal(
-    get_chord(left = c("1", "b3", "5"), right = c("8", "b13"), root = "C"),
+    get_chord(left = c("1", "b3", "5"), right = c("8", "b13"), root = "D"),
     list(
-      left = c("C", "Eb", "G"),
-      right = c("C", "Ab")
+      left = c("D", "F", "A"),
+      right = c("D", "Bb")
     )
   )
 })
