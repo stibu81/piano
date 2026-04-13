@@ -11,19 +11,18 @@
 #'   of [get_major_scale_with_alt()] for a precomputed scale.
 #'
 #' @returns
-#' A list with components `left` and `right`, each containing a 
+#' A list with components `left` and `right`, each containing a
 #' character vector of note names.
 #'
 #' @export
 
 get_chord <- function(left = c(), right = c(), root = "C") {
-  
   # root can either be a single note or the output of get_major_scale_with_alt()
   len <- length(root)
   scale <- if (len == 1) {
     get_major_scale_with_alt(root)
   } else if (len == 23) {
-    root 
+    root
   } else {
     cli::cli_abort(
       c(
@@ -42,6 +41,6 @@ get_chord <- function(left = c(), right = c(), root = "C") {
 
   list(
     left = unname(scale[left]),
-    right = unname(scale[right]) 
+    right = unname(scale[right])
   )
 }

@@ -24,15 +24,17 @@
 #'
 #' @export
 
-plot_piano <- function(lower = "A2", upper = "c5",
-                       labels = c("none", "white", "black", "all"),
-                       black_labels = c("sharp", "flat"),
-                       mark_left = c(),
-                       mark_right = c(),
-                       mark = NULL,
-                       colour_left = "deepskyblue",
-                       colour_right = "firebrick1") {
-
+plot_piano <- function(
+  lower = "A2",
+  upper = "c5",
+  labels = c("none", "white", "black", "all"),
+  black_labels = c("sharp", "flat"),
+  mark_left = c(),
+  mark_right = c(),
+  mark = NULL,
+  colour_left = "deepskyblue",
+  colour_right = "firebrick1"
+) {
   labels <- match.arg(labels)
   black_labels <- match.arg(black_labels)
 
@@ -47,14 +49,26 @@ plot_piano <- function(lower = "A2", upper = "c5",
   # below need different mappings.
   piano_plot <- ggplot2::ggplot() +
     ggplot2::geom_rect(
-      ggplot2::aes(xmin = .data[["xmin"]], width = .data[["width"]],
-                   ymin = .data[["ymin"]], ymax = .data[["ymax"]]),
-      data = keys_f$white, colour = "black", fill = "white"
+      ggplot2::aes(
+        xmin = .data[["xmin"]],
+        width = .data[["width"]],
+        ymin = .data[["ymin"]],
+        ymax = .data[["ymax"]]
+      ),
+      data = keys_f$white,
+      colour = "black",
+      fill = "white"
     ) +
     ggplot2::geom_rect(
-      ggplot2::aes(xmin = .data[["xmin"]], width = .data[["width"]],
-                   ymin = .data[["ymin"]], ymax = .data[["ymax"]]),
-      data = keys_f$black, colour = "black", fill = "black"
+      ggplot2::aes(
+        xmin = .data[["xmin"]],
+        width = .data[["width"]],
+        ymin = .data[["ymin"]],
+        ymax = .data[["ymax"]]
+      ),
+      data = keys_f$black,
+      colour = "black",
+      fill = "black"
     ) +
     ggplot2::coord_equal() +
     ggplot2::theme_void()
@@ -91,7 +105,6 @@ plot_piano <- function(lower = "A2", upper = "c5",
 
 
 prepare_markers <- function(keys, mark, mark_left, mark_right) {
-
   x_range <- range(keys$white$xmin)
 
   # if mark is given, it overrides mark_left and mark_right
@@ -101,26 +114,30 @@ prepare_markers <- function(keys, mark, mark_left, mark_right) {
   }
 
   dplyr::bind_rows(
-      get_key_markers(mark_left) %>%
-        dplyr::mutate(hand = "left"),
-      get_key_markers(mark_right) %>%
-        dplyr::mutate(hand = "right")
-    ) %>%
+    get_key_markers(mark_left) %>%
+      dplyr::mutate(hand = "left"),
+    get_key_markers(mark_right) %>%
+      dplyr::mutate(hand = "right")
+  ) %>%
     # drop markers that are outside of the keyboard range
     dplyr::filter(dplyr::between(.data$x, x_range[1], x_range[2]))
 }
 
 
 add_key_labels <- function(plot, keys_f, labels, black_labels) {
-
-  if (labels == "none") return(plot)
+  if (labels == "none") {
+    return(plot)
+  }
 
   if (labels %in% c("white", "all")) {
     plot <- plot +
       ggplot2::geom_text(
         data = keys_f$white,
-        ggplot2::aes(x = .data[["xmin"]] + .data[["width"]] / 2,
-                     y = -.6, label = .data[["name"]])
+        ggplot2::aes(
+          x = .data[["xmin"]] + .data[["width"]] / 2,
+          y = -.6,
+          label = .data[["name"]]
+        )
       )
   }
   # if black keys labels are to be shown, their y coordinate depends on whether
@@ -129,17 +146,22 @@ add_key_labels <- function(plot, keys_f, labels, black_labels) {
     plot <- plot +
       ggplot2::geom_text(
         data = keys_f$black,
-        ggplot2::aes(x = .data[["xmin"]] + .data[["width"]] / 2,
-                     y = if (labels == "all") -1.4 else -.6,
-                     label = .data[[paste0("name_", black_labels)]])
+        ggplot2::aes(
+          x = .data[["xmin"]] + .data[["width"]] / 2,
+          y = if (labels == "all") -1.4 else -.6,
+          label = .data[[paste0("name_", black_labels)]]
+        )
       )
   }
 
   # to prevent labels from beeing cut off, add a transparent point annotation
   plot <- plot +
-    ggplot2::annotate("point", x = min(keys_f$white$xmin),
-                      y = if (labels == "all") -1.5 else -.7,
-                      alpha = 0)
+    ggplot2::annotate(
+      "point",
+      x = min(keys_f$white$xmin),
+      y = if (labels == "all") -1.5 else -.7,
+      alpha = 0
+    )
 
   plot
 }

@@ -5,3 +5,5 @@
 ^\.github$
 ^README\.Rmd$
 ^\.pre-commit-config\.yaml$
+^[.]?air[.]toml$
+^\.vscode$

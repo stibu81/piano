@@ -11,8 +11,10 @@ keys_data <- local({
   white <- dplyr::tibble(
     name = paste0(
       c(
-        utils::tail(c_major, 2), rep(c_major, 2),
-        tolower(rep(c_major, 5)), "c"
+        utils::tail(c_major, 2),
+        rep(c_major, 2),
+        tolower(rep(c_major, 5)),
+        "c"
       ),
       c(rep(2, 2), rep(1, 7), rep("", 14), rep(1:4, each = 7), 5)
     ),
@@ -27,15 +29,15 @@ keys_data <- local({
   )
 
   # add names with accidentals for white keys
-  white <- white %>% 
+  white <- white %>%
     dplyr::mutate(
       name_flat = c(.data$name[-1], "d5") %>%
         # add one flat everywhere, add a second one only where needed
-        stringr::str_replace("^([A-Ga-g])", "\\1b") %>% 
+        stringr::str_replace("^([A-Ga-g])", "\\1b") %>%
         stringr::str_replace("^([^CcFf])", "\\1b"),
       name_sharp = c("G2", utils::head(.data$name, -1)) %>%
         # add one sharp everywhere, add a second one only where needed
-        stringr::str_replace("^([A-Ga-g])", "\\1#") %>% 
+        stringr::str_replace("^([A-Ga-g])", "\\1#") %>%
         stringr::str_replace("^([^EeBb])", "\\1#"),
       .after = "name"
     )
@@ -46,7 +48,8 @@ keys_data <- local({
   black <- dplyr::tibble(
     name_sharp = paste0(
       c(
-        utils::tail(sharps, 1), rep(sharps, 2),
+        utils::tail(sharps, 1),
+        rep(sharps, 2),
         tolower(rep(sharps, 5))
       ),
       "#",
@@ -54,7 +57,8 @@ keys_data <- local({
     ),
     name_flat = paste0(
       c(
-        utils::tail(flats, 1), rep(flats, 2),
+        utils::tail(flats, 1),
+        rep(flats, 2),
         tolower(rep(flats, 5))
       ),
       "b",
@@ -63,7 +67,8 @@ keys_data <- local({
     xmin = c(
       -2,
       rep(c(0, 1, 3:5), n8) + 7 * rep(0:(n8 - 1), each = 5)
-    ) + (1 - 0.52/2),
+    ) +
+      (1 - 0.52 / 2),
     width = 0.52,
     ymin = 2.2,
     ymax = 6.5
@@ -77,22 +82,23 @@ keys_data <- local({
 # extract major scales.
 
 notes_data <- local({
-
   # pick the x-coordinate of C1 and c1. This is the range we want to cover
   xcs <- keys_data$white$xmin[keys_data$white$name %in% c("C", "c1")]
 
   generate_note_sequence <- function(accidentals) {
     dplyr::bind_rows(
-        keys_data$white %>% dplyr::select("name", "xmin"),
-        keys_data$black %>%
-          dplyr::select(name = paste0("name_", accidentals), "xmin")
-      ) %>%
+      keys_data$white %>% dplyr::select("name", "xmin"),
+      keys_data$black %>%
+        dplyr::select(name = paste0("name_", accidentals), "xmin")
+    ) %>%
       dplyr::filter(dplyr::between(.data$xmin, xcs[1], xcs[2])) %>%
       dplyr::arrange(.data$xmin) %>%
       dplyr::select(-"xmin") %>%
       # remove numbers in note names and convert to upper case
-      dplyr::mutate(name = stringr::str_remove(.data$name, "\\d$") %>%
-                      notes_toupper()) %>%
+      dplyr::mutate(
+        name = stringr::str_remove(.data$name, "\\d$") %>%
+          notes_toupper()
+      ) %>%
       dplyr::mutate(rank = seq(1, by = 0.5, length.out = nrow(.)))
   }
 
@@ -104,23 +110,25 @@ notes_data <- local({
 })
 
 
-# Create table of enharmonic equivalents. 
+# Create table of enharmonic equivalents.
 equiv_table <- dplyr::bind_rows(
-  keys_data$white %>% 
+  keys_data$white %>%
     dplyr::select(name = "name_sharp", equiv = "name"),
-  keys_data$white %>% 
+  keys_data$white %>%
     dplyr::select(name = "name_flat", equiv = "name"),
-  keys_data$white %>% 
+  keys_data$white %>%
     dplyr::select(name = "name", equiv = "name_sharp"),
-  keys_data$white %>% 
+  keys_data$white %>%
     dplyr::select(name = "name", equiv = "name_flat"),
-  keys_data$black %>% 
+  keys_data$black %>%
     dplyr::select(name = "name_sharp", equiv = "name_flat"),
-  keys_data$black %>% 
+  keys_data$black %>%
     dplyr::select(name = "name_flat", equiv = "name_sharp")
 )
 
 
 # Define the major keys that are written with sharps and flats
-major_keys_data <- list(flat = c("F", "Bb", "Eb", "Ab", "Db", "Gb"),
-                        sharp = c("G", "D", "A", "E", "B", "F#"))
+major_keys_data <- list(
+  flat = c("F", "Bb", "Eb", "Ab", "Db", "Gb"),
+  sharp = c("G", "D", "A", "E", "B", "F#")
+)

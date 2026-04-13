@@ -30,6 +30,7 @@ repos:
           .*\.rds|
           .*\.Rds|
           .*\.Rproj|
+          .*\.toml|
           (.*/|)\.gitignore|
           (.*/|)\.pre-commit-.*|
           (.*/|)\.Rbuildignore|
@@ -38,6 +39,7 @@ repos:
           DESCRIPTION|
           (.*/|)WORDLIST|
           \.github/workflows/.*|
+          .vscode/.*|
           R/.*|
           data/.*|
           tests/.*|
@@ -50,6 +52,12 @@ repos:
     -   id: no-debug-statement
     -   id: deps-in-desc
     -   id: pkgdown
+-   repo: https://github.com/posit-dev/air-pre-commit
+    # Air version
+    rev: 0.9.0
+    hooks:
+        # Run the formatter
+    -   id: air-format
 -   repo: local
     hooks:
     -   id: forbid-to-commit
