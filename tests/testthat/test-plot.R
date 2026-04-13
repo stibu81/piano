@@ -44,6 +44,18 @@ test_that("plot_piano() works with markers", {
                                  colour_right = "#ef45d2"))
 })
 
+
+test_that("plot_piano() works with markers passed as list", {
+  expect_doppelganger("plot_piano() with markers as list for left hand",
+                      plot_piano(mark = list(left = c("D", "F#", "A", "c"))))
+  expect_doppelganger("plot_piano() with markers as list for right hand",
+                      plot_piano(mark = list(right = c("g1", "bb1", "d2", "f2"))))
+  expect_doppelganger("plot_piano() with markers as list for both hands",
+                      plot_piano(mark = list(left = c("e", "bb", "d1"),
+                                        right = c("e1", "a1", "c2"))))
+})
+
+
 test_that("plot_piano() works with markers and range restriction", {
   expect_doppelganger(
     "plot_piano() with range restriction and markers within range",
