@@ -11,6 +11,7 @@ plot_piano(
   black_labels = c("sharp", "flat"),
   mark_left = c(),
   mark_right = c(),
+  mark = NULL,
   colour_left = "deepskyblue",
   colour_right = "firebrick1"
 )
@@ -32,6 +33,9 @@ of the black keys.}
 
 \item{mark_left, mark_right}{mark keys for the left and right hand with
 coloured dots. Markers that lie outside the plotted keyboard range or omitted.}
+
+\item{mark}{provide markers as a list with elements \code{left} and \code{right}.
+If given, this overrides \code{mark_left} and \code{mark_right}.}
 
 \item{colour_left, colour_right}{the colours to be used to mark keys. By
 default, a blue colour is used for the left hand and a red colour for the
