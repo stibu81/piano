@@ -23,9 +23,10 @@ filter_key_range <- function(keys, lower, upper, error_call = rlang::caller_env(
 }
 
 
-# verify that a character vector contains valid key names
+# verify that a character vector contains valid key names.
+# Since notes are also valid keys, this function also works for them.
 
-verify_key_names <- function(
+verify_keys <- function(
   key_names,
   type = c("all", "white", "black"),
   error_call = rlang::caller_env()
