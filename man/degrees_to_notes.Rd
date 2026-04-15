@@ -2,23 +2,34 @@
 % Please edit documentation in R/conversion.R
 \name{degrees_to_notes}
 \alias{degrees_to_notes}
-\title{Convert Scale Degrees to Notes}
+\alias{notes_to_keys}
+\title{Convert Between Scale Degrees, Notes, and Keys}
 \usage{
 degrees_to_notes(degrees, root_note = "C", scale = NULL)
+
+notes_to_keys(notes, lower = NULL, upper = NULL)
 }
 \arguments{
-\item{degrees}{character indicating the degrees degrees to include in
-the left and right hand, respectively. Valid values are the degrees degrees
+\item{degrees}{character vector of scale degrees. Valid values are the degrees
 returned by \code{\link[=get_major_scale_with_alt]{get_major_scale_with_alt()}}: all integers from 1 to 15 and
 the alterations b3, b5, #5, b7, b9, #9, #11, and b13.}
 
-\item{root_note}{a single note indicating the root note of the chord.}
+\item{root_note}{a single note indicating the root note relative to which the
+scale degrees are interpreted.}
 
 \item{scale}{the output of \code{\link[=get_major_scale_with_alt]{get_major_scale_with_alt()}} for the key corresponding
 to the desired root note. This is mainly provided to improve performance, if many
 chords with the same root need to be computed, since \code{get_major_scale_with_alt()}
 is where the functions spends most its time.}
+
+\item{notes}{character vector of notes. They will be converted to upper case.}
+
+\item{upper, lower}{a single key that is used for the conversion to keys.
+Key will be selected such that they all lie above (below) \code{upper} (\code{lower}).}
+}
+\value{
+a character vector of the same length as \code{notes} or \code{degrees}, respectively.
 }
 \description{
-Convert a vector of scale degrees to notes for a given root note.
+Convert Between Scale Degrees, Notes, and Keys
 }

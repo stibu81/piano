@@ -59,6 +59,7 @@ test_that("every note has an enharmonic equivalent", {
   expect_in(keys_data$black$name_sharp, equiv_table$key)
 })
 
+
 test_that("every note has the correct number of enharmonic equivalents", {
   # notes have at most one equivalent without double accidental
   equiv_table %>%
@@ -78,4 +79,20 @@ test_that("every note has the correct number of enharmonic equivalents", {
     count(key) %>%
     pull(n) %>%
     expect_all_equal(1)
+})
+
+
+test_that("every key has exactly one associated note", {
+  expect_in(keys_data$white$name, notes_keys_data$key)
+  expect_in(keys_data$white$name_flat, notes_keys_data$key)
+  expect_in(keys_data$white$name_sharp, notes_keys_data$key)
+  expect_in(keys_data$black$name_flat, notes_keys_data$key)
+  expect_in(keys_data$black$name_sharp, notes_keys_data$key)
+  expect_equal(sum(duplicated(notes_keys_data$key)), 0)
+})
+
+
+test_that("every note in notes_keys_data has the correct format", {
+  # expected format: capital A-G, zero, one or two accidentals.
+  expect_match(notes_keys_data$note, "^[A-G](b|#){0,2}$")
 })

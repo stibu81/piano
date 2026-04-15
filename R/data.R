@@ -127,6 +127,26 @@ equiv_table <- dplyr::bind_rows(
 )
 
 
+# create a table for conversion of notes to keys
+notes_keys_data <- dplyr::bind_rows(
+  keys_data$white %>%
+    dplyr::select(key = "name", "xmin"),
+  keys_data$white %>%
+    dplyr::select(key = "name_sharp", "xmin"),
+  keys_data$white %>%
+    dplyr::select(key = "name_flat", "xmin"),
+  keys_data$black %>%
+    dplyr::select(key = "name_sharp", "xmin"),
+  keys_data$black %>%
+    dplyr::select(key = "name_flat", "xmin")
+) %>%
+  dplyr::arrange(.data$xmin) %>%
+  dplyr::mutate(
+    note = stringr::str_remove(.data$key, "\\d$") %>% notes_toupper()
+  ) %>%
+  dplyr::select("note", "key")
+
+
 # Define the major keys that are written with sharps and flats
 major_keys_data <- list(
   flat = c("F", "Bb", "Eb", "Ab", "Db", "Gb"),
