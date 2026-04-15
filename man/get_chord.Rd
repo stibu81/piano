@@ -12,7 +12,8 @@ the left and right hand, respectively. Valid values are the degrees degrees
 returned by \code{\link[=get_major_scale_with_alt]{get_major_scale_with_alt()}}: all integers from 1 to 15 and
 the alterations b3, b5, #5, b7, b9, #9, #11, and b13.}
 
-\item{root_note}{a single note indicating the root note of the chord.}
+\item{root_note}{a single note indicating the root note of the chord. Scale
+degrees are interpreted relative to this root note.}
 
 \item{scale}{the output of \code{\link[=get_major_scale_with_alt]{get_major_scale_with_alt()}} for the key corresponding
 to the desired root note. This is mainly provided to improve performance, if many
