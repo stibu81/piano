@@ -166,9 +166,8 @@ get_enharmonic_equivalent <- function(
 #'  @export
 
 notes_toupper <- function(notes) {
-  toupper(notes) %>%
-    # replace all Bs that appear after an upper case note name to lower case
-    stringr::str_replace("([A-G])B", "\\1b")
+  # only convert the first character to upper case
+  paste0(toupper(stringr::str_sub(notes, 1, 1)), stringr::str_sub(notes, 2))
 }
 
 #' @rdname notes_toupper
