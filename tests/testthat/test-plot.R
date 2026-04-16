@@ -88,3 +88,15 @@ test_that("plot_piano() works with markers and range restriction", {
     )
   )
 })
+
+
+test_that("plot_piano() can visualise a chord", {
+  expect_doppelganger(
+    "plot_piano() with a chord",
+    plot_piano(
+      "C",
+      "c3",
+      mark = get_chord(c("1", "1"), c("5", "1", "3"), root_note = "Ab", lower = "C")
+    )
+  )
+})
