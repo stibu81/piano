@@ -24,8 +24,9 @@ is where the functions spends most its time.}
 
 \item{notes}{character vector of notes. They will be converted to upper case.}
 
-\item{upper, lower}{a single key that is used for the conversion to keys.
-Key will be selected such that they all lie above (below) \code{upper} (\code{lower}).}
+\item{upper, lower}{exactly one of the two arguments must be passed. It is
+a single key that is used for the conversion to keys.
+Keys will be selected such that they all lie above (below) \code{upper} (\code{lower}).}
 }
 \value{
 a character vector of the same length as \code{notes} or \code{degrees}, respectively.

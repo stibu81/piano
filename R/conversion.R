@@ -10,8 +10,9 @@
 #'   to the desired root note. This is mainly provided to improve performance, if many
 #'   chords with the same root need to be computed, since `get_major_scale_with_alt()`
 #'   is where the functions spends most its time.
-#' @param upper,lower a single key that is used for the conversion to keys.
-#'   Key will be selected such that they all lie above (below) `upper` (`lower`).
+#' @param upper,lower exactly one of the two arguments must be passed. It is
+#'   a single key that is used for the conversion to keys.
+#'   Keys will be selected such that they all lie above (below) `upper` (`lower`).
 #'
 #' @returns
 #' a character vector of the same length as `notes` or `degrees`, respectively.

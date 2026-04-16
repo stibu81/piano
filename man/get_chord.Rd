@@ -2,13 +2,20 @@
 % Please edit documentation in R/chords.R
 \name{get_chord}
 \alias{get_chord}
-\title{Generate a Chord from Intervals}
+\title{Generate the Notes or Keys of a Chord from Scale Degrees}
 \usage{
-get_chord(left = c(), right = c(), root_note = "C", scale = NULL)
+get_chord(
+  left = c(),
+  right = c(),
+  root_note = "C",
+  scale = NULL,
+  lower = NULL,
+  upper = NULL
+)
 }
 \arguments{
-\item{left, right}{character indicating the degrees degrees to include in
-the left and right hand, respectively. Valid values are the degrees degrees
+\item{left, right}{character indicating the scale degrees to include in
+the left and right hand, respectively. Valid values are the scale degrees
 returned by \code{\link[=get_major_scale_with_alt]{get_major_scale_with_alt()}}: all integers from 1 to 15 and
 the alterations b3, b5, #5, b7, b9, #9, #11, and b13.}
 
@@ -19,12 +26,17 @@ degrees are interpreted relative to this root note.}
 to the desired root note. This is mainly provided to improve performance, if many
 chords with the same root need to be computed, since \code{get_major_scale_with_alt()}
 is where the functions spends most its time.}
+
+\item{upper, lower}{a single key that is used for the conversion to keys. If both
+are omitted, the function will return notes, if exactly one of them is given, it
+will return keys. Keys will be selected such that they all lie above (below)
+\code{upper} (\code{lower}).}
 }
 \value{
-A list with components \code{left} and \code{right}, each containing a
-character vector of notes.
+A list with components \code{left} and \code{right}, each containing a character
+vector of notes.
 }
 \description{
-Create a chord voicing by selecting intervals from a major degrees with
+Create a chord voicing by selecting scale degrees from a major scale with
 alterations.
 }
