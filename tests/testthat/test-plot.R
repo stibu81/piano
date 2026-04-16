@@ -100,3 +100,15 @@ test_that("plot_piano() can visualise a chord", {
     )
   )
 })
+
+
+test_that("plot_piano() can add labels", {
+  expect_doppelganger(
+    "plot_piano() with title",
+    plot_piano("C", "c1", title = "Two octaves")
+  )
+  expect_doppelganger(
+    "plot_piano() with title and subtitle",
+    plot_piano("F", "f1", title = "Two octaves", subtitle = "From F to f1")
+  )
+})

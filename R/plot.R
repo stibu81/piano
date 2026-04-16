@@ -18,6 +18,8 @@
 #' @param colour_left,colour_right the colours to be used to mark keys. By
 #'  default, a blue colour is used for the left hand and a red colour for the
 #'  right hand.
+#' @param title,subtitle characters used as title and subtitle, respectively. Note that
+#'  a subtitle is only added, if also a title has been provided.
 #'
 #' @returns
 #' a `ggplot` object
@@ -32,6 +34,8 @@ plot_piano <- function(
   mark_left = c(),
   mark_right = c(),
   mark = NULL,
+  title = NULL,
+  subtitle = NULL,
   colour_left = "deepskyblue",
   colour_right = "firebrick1"
 ) {
@@ -99,6 +103,11 @@ plot_piano <- function(
       values = c("left" = colour_left, right = colour_right),
       guide = "none"
     )
+
+  # add title
+  if (!is.null(title)) {
+    piano_plot <- piano_plot + ggplot2::ggtitle(title, subtitle)
+  }
 
   piano_plot
 }

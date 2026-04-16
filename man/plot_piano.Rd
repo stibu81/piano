@@ -12,6 +12,8 @@ plot_piano(
   mark_left = c(),
   mark_right = c(),
   mark = NULL,
+  title = NULL,
+  subtitle = NULL,
   colour_left = "deepskyblue",
   colour_right = "firebrick1"
 )
@@ -36,6 +38,9 @@ coloured dots. Markers that lie outside the plotted keyboard range or omitted.}
 
 \item{mark}{provide markers as a list with elements \code{left} and \code{right}.
 If given, this overrides \code{mark_left} and \code{mark_right}.}
+
+\item{title, subtitle}{characters used as title and subtitle, respectively. Note that
+a subtitle is only added, if also a title has been provided.}
 
 \item{colour_left, colour_right}{the colours to be used to mark keys. By
 default, a blue colour is used for the left hand and a red colour for the
