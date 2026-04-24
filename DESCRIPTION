@@ -14,9 +14,9 @@ Imports:
     ggplot2,
     ggforce,
     rlang,
-    purrr,
     cli,
-    stringr
+    stringr,
+    vctrs
 Suggests: 
     spelling,
     testthat (>= 3.0.0),
@@ -27,6 +27,7 @@ Collate:
     'conversion.R'
     'notes.R'
     'data.R'
+    'helpers.R'
     'key_markers.R'
     'keys.R'
     'piano-package.R'
