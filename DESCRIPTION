@@ -27,6 +27,7 @@ Collate:
     'conversion.R'
     'notes.R'
     'data.R'
+    'degrees.R'
     'helpers.R'
     'key_markers.R'
     'keys.R'
