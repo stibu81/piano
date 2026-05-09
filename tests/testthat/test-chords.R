@@ -1,3 +1,10 @@
+library(dplyr, warn.conflicts = FALSE)
+
+# define a reference tibble of chord properties
+chord_props <- function(rtd, lft, top = NA_character_, alt = character()) {
+  tibble(rooted = rtd, left_hand = lft, top_degree = top, alterations = list(alt))
+}
+
 test_that("get_chord() works with a root note", {
   expect_equal(
     get_chord(left = c("1", "b3", "5"), right = c("8", "b13"), root = "D"),
@@ -101,4 +108,25 @@ test_that("get_chord() skips keys with NA in different positions", {
       right = c("b", "e1", "g#1")
     )
   )
+})
+
+
+test_that("analyse_chord() works for different chords", {
+  expect_equal(
+    analyse_chord(c("1", "b7"), c("3", "13", "1")),
+    chord_props(rtd = TRUE, lft = FALSE, top = "1")
+  )
+  expect_equal(
+    analyse_chord(c("b3", "5", "6", "9")),
+    chord_props(rtd = FALSE, lft = TRUE, top = "9")
+  )
+  expect_equal(
+    analyse_chord(c("3", "b13", "#9"), c("#11", "b7", "b9")),
+    chord_props(rtd = FALSE, lft = FALSE, top = "b9", alt = c("b9", "#9", "#11", "b13"))
+  )
+})
+
+
+test_that("analyse_chord() handles invaild input", {
+  expect_error(analyse_chord(), "At least one hand must contain some scale degrees")
 })
