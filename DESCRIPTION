@@ -6,8 +6,6 @@ Authors@R:
 Description: Visualise a piano keyboard with ggplot2.
 License: MIT + file LICENSE
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Language: en-GB
 Imports: 
     dplyr,
@@ -21,7 +19,6 @@ Suggests:
     spelling,
     testthat (>= 3.0.0),
     vdiffr
-Config/testthat/edition: 3
 Collate: 
     'chords.R'
     'conversion.R'
@@ -34,3 +31,6 @@ Collate:
     'piano-package.R'
     'plot.R'
     'scales.R'
+Config/testthat/edition: 3
+Config/roxygen2/markdown: TRUE
+Config/roxygen2/version: 8.0.0
