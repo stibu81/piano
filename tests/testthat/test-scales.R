@@ -53,14 +53,14 @@ test_that("error messages for get_major_scale() work", {
 
 test_that("get_major_scale_with_alt() works for one octave", {
   # fmt: skip
-  alt_names <- c("1", "2", "b3", "3", "4", "b5", "5", "#5", "6", "b7", "7", "8",
-                 "b9", "9", "#9", "10", "11", "#11", "12", "b13", "13", "14", "15")
+  alt_names <- c("1", "2", "b3", "3", "4", "b5", "5", "#5", "6", "b7", "7",
+                 "b9", "9", "#9", "11", "#11", "b13", "13")
   expect_equal(
     get_major_scale_with_alt("C"),
     setNames(
       # fmt: skip
-      c("C", "D", "Eb", "E", "F", "Gb", "G", "G#", "A", "Bb", "B", "C",
-        "Db", "D", "D#", "E", "F", "F#", "G", "Ab", "A", "B", "C"),
+      c("C", "D", "Eb", "E", "F", "Gb", "G", "G#", "A", "Bb", "B",
+        "Db", "D", "D#", "F", "F#", "Ab", "A"),
       alt_names
     )
   )
@@ -68,8 +68,8 @@ test_that("get_major_scale_with_alt() works for one octave", {
     get_major_scale_with_alt("E"),
     setNames(
       # fmt: skip
-      c("E", "F#", "G", "G#", "A", "Bb", "B", "B#", "C#", "D", "D#", "E",
-        "F", "F#", "F##", "G#", "A", "A#", "B", "C", "C#", "D#", "E"),
+      c("E", "F#", "G", "G#", "A", "Bb", "B", "B#", "C#", "D", "D#",
+        "F", "F#", "F##", "A", "A#", "C", "C#"),
       alt_names
     )
   )
@@ -77,8 +77,8 @@ test_that("get_major_scale_with_alt() works for one octave", {
     get_major_scale_with_alt("Ab"),
     setNames(
       # fmt: skip
-      c("Ab", "Bb", "Cb", "C", "Db", "Ebb", "Eb", "E", "F", "Gb", "G", "Ab",
-        "Bbb", "Bb", "B", "C", "Db", "D", "Eb", "Fb", "F", "G", "Ab"),
+      c("Ab", "Bb", "Cb", "C", "Db", "Ebb", "Eb", "E", "F", "Gb", "G",
+        "Bbb", "Bb", "B", "Db", "D", "Fb", "F"),
       alt_names
     )
   )

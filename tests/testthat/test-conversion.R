@@ -1,6 +1,6 @@
 test_that("degrees_to_notes() works with a root note", {
   expect_equal(
-    degrees_to_notes(c("2", "#11", "b7", "10", "b13"), "Ab"),
+    degrees_to_notes(c("2", "#11", "b7", "3", "b13"), "Ab"),
     c("Bb", "D", "Gb", "C", "Fb")
   )
 })

@@ -83,8 +83,5 @@ get_major_scale_with_alt <- function(tonic) {
   alt_sharp <- sharpen(scale[i_alt_sharp])
   names(alt_sharp) <- paste0("#", i_alt_sharp)
 
-  # define a numeric vector that can be used for sorting
-  srt_vec <- c(1:15, i_alt_flat - .5, i_alt_sharp + .5)
-
-  c(scale, alt_flat, alt_sharp)[order(srt_vec)]
+  c(scale, alt_flat, alt_sharp)[valid_chord_degrees_data]
 }

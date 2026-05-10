@@ -7,7 +7,7 @@ chord_props <- function(rtd, lft, top = NA_character_, alt = character()) {
 
 test_that("get_chord() works with a root note", {
   expect_equal(
-    get_chord(left = c("1", "b3", "5"), right = c("8", "b13"), root = "D"),
+    get_chord(left = c("1", "b3", "5"), right = c("1", "b13"), root = "D"),
     list(
       left = c("D", "F", "A"),
       right = c("D", "Bb")
@@ -20,7 +20,7 @@ test_that("get_chord() works with a precomputed scale", {
   scale <- get_major_scale_with_alt("E")
 
   expect_equal(
-    get_chord(left = c("1", "5"), right = c("8", "9", "#11"), scale = scale),
+    get_chord(left = c("1", "5"), right = c("1", "9", "#11"), scale = scale),
     list(
       left = c("E", "B"),
       right = c("E", "F#", "A#")
@@ -31,7 +31,7 @@ test_that("get_chord() works with a precomputed scale", {
 
 test_that("get_chord() generates correct keys", {
   expect_equal(
-    get_chord(left = c("1", "b3", "5"), right = c("8", "b13"), root = "D", lower = "c"),
+    get_chord(left = c("1", "b3", "5"), right = c("1", "b13"), root = "D", lower = "c"),
     list(
       left = c("d", "f", "a"),
       right = c("d1", "bb1")
@@ -51,7 +51,7 @@ test_that("get_chord() skips keys with NA in different positions", {
   expect_equal(
     get_chord(
       left = c("1", "b3", NA, "5"),
-      right = c("8", NA, "b13"),
+      right = c("1", NA, "b13"),
       root = "D",
       lower = "c"
     ),

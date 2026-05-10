@@ -1,5 +1,5 @@
 # We need notes_toupper() from notes.R
-#' @include notes.R
+#' @include notes.R degrees.R
 
 # Define an object that contains data on white and black keys.
 # Note names use the numbered Helmholtz pitch notation where a standard
@@ -152,3 +152,10 @@ major_keys_data <- list(
   flat = c("F", "Bb", "Eb", "Ab", "Db", "Gb"),
   sharp = c("G", "D", "A", "E", "B", "F#")
 )
+
+valid_chord_degrees_data <- c(
+  c(1:7, 9, 11, 13),
+  paste0("b", c(3, 5, 7, 9, 13)),
+  paste0("#", c(5, 9, 11))
+) %>%
+  sort_degrees()

@@ -22,9 +22,9 @@ Suggests:
 Collate: 
     'chords.R'
     'conversion.R'
+    'degrees.R'
     'notes.R'
     'data.R'
-    'degrees.R'
     'helpers.R'
     'key_markers.R'
     'keys.R'
