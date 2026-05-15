@@ -130,3 +130,56 @@ test_that("analyse_chord() works for different chords", {
 test_that("analyse_chord() handles invaild input", {
   expect_error(analyse_chord(), "At least one hand must contain some scale degrees")
 })
+
+
+test_that("is_valid_chord() works for all chord types", {
+  expect_true(
+    is_valid_chord(left = c("1", "3"), right = c("5", "9"), type = "major")
+  )
+  expect_false(
+    is_valid_chord(left = c("1", "3"), right = c("b7", "9"), type = "major")
+  )
+
+  expect_true(
+    is_valid_chord(left = c("1", "b3"), right = c("5", "11"), type = "minor")
+  )
+  expect_false(
+    is_valid_chord(left = c("1", "b3"), right = c("3", "11"), type = "minor")
+  )
+
+  expect_true(
+    is_valid_chord(left = c("1", "3"), right = c("b7", "9"), type = "dominant")
+  )
+  expect_false(
+    is_valid_chord(left = c("1", "3"), right = c("7", "9"), type = "dominant")
+  )
+
+  expect_true(
+    is_valid_chord(left = c("1", "b3"), right = c("b5", "b7"), type = "half-diminished")
+  )
+  expect_false(
+    is_valid_chord(left = c("1", "b3"), right = c("5", "b7"), type = "half-diminished")
+  )
+
+  expect_true(
+    is_valid_chord(left = c("1", "b3"), right = c("b5", "b13"), type = "diminished")
+  )
+  expect_false(
+    is_valid_chord(left = c("1", "b3"), right = c("b5", "7"), type = "diminished")
+  )
+
+  expect_true(
+    is_valid_chord(left = c("1", "3"), right = c("#5", "9"), type = "augmented")
+  )
+  expect_false(
+    is_valid_chord(left = c("1", "3"), right = c("5", "9"), type = "augmented")
+  )
+})
+
+
+test_that("is_valid_chord() handles invalid type", {
+  expect_error(
+    is_valid_chord(left = c("1", "3", "5"), type = "somethingelse"),
+    "should be one of"
+  )
+})

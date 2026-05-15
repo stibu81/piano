@@ -5,8 +5,8 @@
 #'
 #' @param left,right character indicating the scale degrees to include in
 #'   the left and right hand, respectively. Valid values are the scale degrees
-#'   returned by [get_major_scale_with_alt()]: all integers from 1 to 15 and
-#'   the alterations b3, b5, #5, b7, b9, #9, #11, and b13.
+#'   returned by [get_major_scale_with_alt()]: 1, 2, b3, 3, 4, b5, 5, #5, 6, b7, 7,
+#'   b9, 9, #9, 11, #11, b13, 13.
 #'
 #'   In order to skip an octave you can insert `NA` anywhere in these vectors.
 #'   When converting notes to keys, an octave will be skipped for every `NA`.
@@ -111,4 +111,58 @@ analyse_chord <- function(left = character(), right = character()) {
     top_degree = top_degree,
     alterations = list(alterations)
   )
+}
+
+
+#' Check Plausibility of the Scale Degrees in a Chord
+#'
+#' Check that the scale degrees contained in a chord are plausible for the
+#' given type. For example, a chord of type "dominant" should not contain
+#' b3 or 7. The function only checks the absence of implausible scale degrees,
+#' but not the presence of expected ones. So, a "dominant" chord is considered
+#' valid even if 3 and/or b7 are missing. This allows to, say, also define a
+#' sus4 chord as a "dominant" chord. See 'Details' for more information.
+#'
+#' @inheritParams analyse_chord
+#' @param type the type of chord that was entered. One of "major", "minor",
+#'  "dominant", "half-diminished", "diminished", or "augmented". The type determines
+#'   which degrees are invalid. See 'Details' for more information.
+#'
+#' @details
+#' In general, the following scale degrees are allowed in chords:
+#' 1, 2, b3, 3, 4, b5, 5, #5, 6, b7, 7, b9, 9, #9, 11, #11, b13, 13.
+#'
+#' Depending on the chord type, some degrees are not allowed:
+#' * "major": b3, b7, b5
+#' * "minor": 3
+#' * "dominant": b3, 7
+#' * "half-diminished": 3, 5, 7
+#' * "diminished": 3, 5, 7
+#' * "augmented": b3, 5
+#'
+#' @returns
+#' a logical indicating whether the chord only contains valid scale degrees.
+#'
+#' @export
+
+is_valid_chord <- function(
+  left = character(),
+  right = character(),
+  type = c("major", "minor", "dominant", "half-diminished", "diminished", "augmented")
+) {
+  type <- match.arg(type)
+
+  # depnding on the type, some degrees should not be in the chord
+  forbidden_degrees <- switch(
+    type,
+    "major" = c("b3", "b7", "b5"),
+    "minor" = c("3"),
+    "dominant" = c("b3", "7"),
+    "half-diminished" = c("3", "5", "7"),
+    "diminished" = c("3", "5", "7"),
+    "augmented" = c("b3", "5")
+  )
+  valid_degrees <- setdiff(valid_chord_degrees_data, forbidden_degrees)
+
+  all(c(left, right) %in% valid_degrees)
 }

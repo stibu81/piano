@@ -16,8 +16,8 @@ get_chord(
 \arguments{
 \item{left, right}{character indicating the scale degrees to include in
 the left and right hand, respectively. Valid values are the scale degrees
-returned by \code{\link[=get_major_scale_with_alt]{get_major_scale_with_alt()}}: all integers from 1 to 15 and
-the alterations b3, b5, #5, b7, b9, #9, #11, and b13.
+returned by \code{\link[=get_major_scale_with_alt]{get_major_scale_with_alt()}}: 1, 2, b3, 3, 4, b5, 5, #5, 6, b7, 7,
+b9, 9, #9, 11, #11, b13, 13.
 
 In order to skip an octave you can insert \code{NA} anywhere in these vectors.
 When converting notes to keys, an octave will be skipped for every \code{NA}.
