@@ -1,1 +1,7 @@
-rootless,type,left,right
+type,notation,name,left,right
+major,maj7,,3 13 9,5 7 9
+minor,m7,,1 5 b3,11 b7 9 11
+dominant,7,,b7 3 9,
+half-diminished,7b5,,1 b3 b7,9 #11 b7
+diminished,o7,,1 1,1 b3 b5 6
+augmented,7,,1 1,b7 3 #5 

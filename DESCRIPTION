@@ -14,17 +14,20 @@ Imports:
     rlang,
     cli,
     stringr,
-    vctrs
+    vctrs,
+    readr
 Suggests: 
     spelling,
     testthat (>= 3.0.0),
-    vdiffr
+    vdiffr,
+    withr
 Collate: 
     'chords.R'
     'conversion.R'
     'degrees.R'
     'notes.R'
     'data.R'
+    'database.R'
     'helpers.R'
     'key_markers.R'
     'keys.R'
