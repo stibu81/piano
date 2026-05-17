@@ -74,6 +74,9 @@ read_chords_csv <- function(file) {
 
   db <- dplyr::bind_cols(db, analysed_chords)
 
+  # set the class. This is only used for printing.
+  class(db) <- c("chords_db", class(db))
+
   db
 }
 
@@ -101,4 +104,28 @@ split_degrees <- function(degrees) {
   split <- stringr::str_split(degrees, "\\s")
   split[is.na(degrees)] <- list(character(0))
   split
+}
+
+
+#' Print Chords Database
+#'
+#' Print a chords database created by [read_chords_csv()]. This basically converts
+#' list columns to a readable format and then prints the tibble in the usual way.
+#' The function thus also respects all the options described in
+#' [pillar::pillar_options].
+#'
+#' @param x chords database to print, usually created with [read_chords_csv()].
+#' @inheritParams tibble::formatting
+#'
+#' @export
+
+print.chords_db <- function(x, width = NULL, n = NULL, ...) {
+  x <- x %>%
+    dplyr::mutate(dplyr::across(dplyr::where(is.list), list2char))
+  NextMethod()
+}
+
+# helper function to convert a list of characters to a character vector
+list2char <- function(x) {
+  vapply(x, \(y) paste(y, collapse = ", "), character(1))
 }

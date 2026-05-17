@@ -18,8 +18,10 @@ db_ref <- tibble(
   top_degree = c("9", "11", "9", "b7", "6", "#5"),
   alterations = list(character(), character(), character(), c("#11"), c("b5"), c("#5"))
 )
+class(db_ref) <- c("chords_db", class(tibble()))
 
 test_that("read_chords_db() works for the example file", {
+  expect_s3_class(read_chords_csv(db_file), "chords_db")
   expect_equal(read_chords_csv(db_file), db_ref)
 })
 
@@ -60,4 +62,18 @@ test_that("read_chord_csv() handles invalid_scale_degrees", {
     read_chords_csv("test.csv"),
     "chord number 3 contains invalid scale degrees"
   )
+})
+
+
+test_that("list2char() works", {
+  expect_equal(
+    list2char(list(c("1", "b3", "5", "b7"), character(0), c("3", "b7"))),
+    c("1, b3, 5, b7", "", "3, b7")
+  )
+})
+
+
+test_that("printing a chords database works", {
+  chords_db <- read_chords_csv(db_file)
+  expect_snapshot(print(chords_db, width = 100))
 })
